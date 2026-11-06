@@ -1,0 +1,1209 @@
+﻿<title>Infyslate Control Tower</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<style>
+:root{--navy:#0d1f2d;--surface:#f0f4f8;--card:#fff;--teal:#5fe3cf;--td:rgba(95,227,207,.12);--cr:#ef4444;--wa:#f59e0b;--ok:#10b981;--tp:#1a2f42;--ts:#64748b;--tm:#94a3b8;--bd:#e2e8f0}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--surface);color:var(--tp);display:flex;flex-direction:column}
+#tb{background:var(--navy);height:48px;display:flex;align-items:center;padding:0 20px;gap:12px;flex-shrink:0}
+.logo{font-weight:700;font-size:15px;color:#fff}.logo span{color:var(--teal)}
+.sbg{font-size:10px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;background:rgba(95,227,207,.18);color:var(--teal);padding:2px 8px;border-radius:3px;border:1px solid rgba(95,227,207,.3)}
+.sp{flex:1}
+.tbtn{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.7);font-size:12px;font-family:inherit;padding:5px 12px;border-radius:5px;cursor:pointer}
+.tbtn:hover{background:rgba(255,255,255,.18);color:#fff}
+.bell{position:relative;cursor:pointer;color:rgba(255,255,255,.7);font-size:16px;padding:6px}
+.bb{position:absolute;top:2px;right:2px;background:var(--cr);color:#fff;font-size:9px;font-weight:700;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.stic{cursor:pointer;color:rgba(255,255,255,.5);font-size:17px;padding:6px;line-height:1}
+.stic:hover{color:#fff}
+#layout{display:flex;flex:1;overflow:hidden}
+#sb{width:220px;background:var(--navy);display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto;padding:8px 0}
+.nl{font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:rgba(255,255,255,.3);padding:12px 16px 4px}
+.ni{display:flex;align-items:center;gap:10px;padding:9px 16px;cursor:pointer;color:rgba(255,255,255,.58);font-size:13px;font-weight:500;transition:.15s;border-left:3px solid transparent;user-select:none}
+.ni:hover{background:rgba(255,255,255,.06);color:rgba(255,255,255,.88)}
+.ni.active{background:rgba(95,227,207,.1);color:var(--teal);border-left-color:var(--teal)}
+.nic{font-size:14px;width:18px;text-align:center}
+.nb{margin-left:auto;background:var(--cr);color:#fff;font-size:10px;font-weight:700;min-width:18px;height:18px;border-radius:9px;display:flex;align-items:center;justify-content:center;padding:0 5px}
+.nb.am{background:var(--wa)}
+#ct{flex:1;overflow-y:auto;padding:24px}
+.ph{margin-bottom:20px}
+.pt2{font-size:22px;font-weight:700;margin-bottom:3px}
+.ps2{font-size:12px;color:var(--ts);display:flex;align-items:center;gap:8px}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.ldot{width:7px;height:7px;border-radius:50%;background:var(--ok);display:inline-block;animation:pulse 2s infinite}
+.kg{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}
+.kt{background:var(--card);border-radius:10px;padding:16px 18px;border:1px solid var(--bd);cursor:pointer;transition:.15s}
+.kt:hover{box-shadow:0 4px 16px rgba(0,0,0,.08);transform:translateY(-1px)}
+.kl{font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--ts);margin-bottom:6px}
+.kv{font-size:28px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1;margin-bottom:3px}
+.kv.vc{color:var(--cr)}.kv.vw{color:var(--wa)}.kv.vo{color:var(--ok)}
+.ks{font-size:11px;color:var(--tm)}
+.kv2{font-size:11px;color:var(--ts);margin-top:6px;padding-top:6px;border-top:1px solid var(--bd)}
+.sh{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.st2{font-size:14px;font-weight:600}
+.card{background:var(--card);border-radius:10px;border:1px solid var(--bd);padding:14px 16px;margin-bottom:12px}
+.ctitle{font-size:12px;font-weight:700;margin-bottom:11px;display:flex;align-items:center;gap:7px}
+.aib{font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;background:var(--td);color:var(--teal);padding:2px 6px;border-radius:3px}
+.af{display:flex;flex-direction:column;gap:5px}
+.ac{background:var(--card);border-radius:7px;padding:9px 13px;border:1px solid var(--bd);display:flex;align-items:center;gap:9px;cursor:pointer;transition:.15s;position:relative;overflow:hidden}
+.ac::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px}
+.ac.critical::before{background:var(--cr)}.ac.warning::before{background:var(--wa)}
+.ac:hover{box-shadow:0 2px 8px rgba(0,0,0,.07)}.ac.res{opacity:.38}
+.asv{font-size:9px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:2px 6px;border-radius:3px;flex-shrink:0}
+.asv.critical{background:rgba(239,68,68,.1);color:var(--cr)}.asv.warning{background:rgba(245,158,11,.1);color:var(--wa)}
+.at{flex:1;font-size:12px}.ati{font-size:10px;color:var(--tm);flex-shrink:0}
+.rt{color:var(--ok);font-size:11px;font-weight:600;flex-shrink:0}
+.tc{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.dt{width:100%;border-collapse:collapse;font-size:12px}
+.dt th{text-align:left;font-size:9px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--tm);padding:0 9px 7px;border-bottom:1px solid var(--bd)}
+.dt td{padding:7px 9px;border-bottom:1px solid var(--bd);vertical-align:middle}
+.dt tr:last-child td{border-bottom:none}
+.dt tbody tr{cursor:pointer;transition:background .1s}.dt tbody tr:hover{background:rgba(95,227,207,.04)}.dt tbody tr.sel{background:rgba(95,227,207,.08)}
+.bdg{font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;display:inline-block}
+.bdg.bc{background:rgba(239,68,68,.1);color:var(--cr)}.bdg.bw{background:rgba(245,158,11,.12);color:var(--wa)}.bdg.bo{background:rgba(16,185,129,.1);color:var(--ok)}
+.btn{font-family:inherit;font-size:12px;font-weight:600;padding:6px 12px;border-radius:6px;border:none;cursor:pointer;transition:.15s;display:inline-flex;align-items:center;gap:5px}
+.bp{background:var(--teal);color:var(--navy)}.bp:hover{background:#4dd4bc}
+.bs{background:var(--surface);color:var(--tp);border:1px solid var(--bd)}.bs:hover{background:#e5eaf0}
+.bd2{background:rgba(239,68,68,.1);color:var(--cr);border:1px solid rgba(239,68,68,.2)}
+.bk{background:rgba(16,185,129,.1);color:var(--ok);border:1px solid rgba(16,185,129,.2)}
+.bw2{background:rgba(245,158,11,.1);color:var(--wa);border:1px solid rgba(245,158,11,.2)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.mr{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--bd);font-size:12px}
+.mr:last-child{border-bottom:none}.mn{color:var(--ts)}.mv{font-weight:600;font-variant-numeric:tabular-nums}
+.xc{background:var(--card);border-radius:8px;border:1px solid var(--bd);padding:11px 13px;display:flex;align-items:center;gap:11px;margin-bottom:7px}
+.xc.ap{border-color:var(--ok);background:rgba(16,185,129,.04)}
+.sg{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.scrd{background:var(--card);border-radius:9px;border:1px solid var(--bd);padding:13px 15px}
+.dr{display:flex;gap:9px;margin-bottom:9px}
+.dc{flex:1}.dcl{font-size:9px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--tm);margin-bottom:3px}
+.db{background:var(--surface);border-radius:5px;padding:7px 10px;font-size:12px;border:1px solid var(--bd)}
+.db.mm{background:rgba(239,68,68,.06);border-color:rgba(239,68,68,.3);color:var(--cr)}
+.cfr{display:flex;align-items:center;gap:7px;padding:5px 0;font-size:11px;border-bottom:1px solid var(--bd)}
+.cfr:last-child{border-bottom:none}
+.cfl{flex:1;color:var(--ts)}.cfv{font-weight:600;min-width:100px}
+.cbw{width:55px;height:4px;background:var(--bd);border-radius:2px}.cbr{height:100%;border-radius:2px}
+.cfp{font-size:10px;min-width:28px;text-align:right;font-variant-numeric:tabular-nums}
+.di{background:var(--card);border-radius:7px;border:1px solid var(--bd);padding:9px 12px;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.di:hover{background:rgba(95,227,207,.04)}.di.sel{border-color:var(--teal);background:rgba(95,227,207,.06)}
+.dst{font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;flex-shrink:0}
+.dst.ex{background:rgba(16,185,129,.1);color:var(--ok)}.dst.rv{background:rgba(245,158,11,.1);color:var(--wa)}
+.cg{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.cc{background:var(--card);border-radius:9px;border:1px solid var(--bd);padding:13px 15px}
+.cc.brch{border-color:rgba(239,68,68,.35)}
+.brt{display:inline-block;font-size:9px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:3px 7px;border-radius:3px;background:rgba(239,68,68,.1);color:var(--cr);margin-top:3px}
+.sw{display:flex;align-items:center;gap:11px;margin:9px 0}
+.sw label{font-size:11px;color:var(--ts);min-width:75px}
+input[type=range]{flex:1;accent-color:var(--teal);height:4px;cursor:pointer}
+.svl{font-size:14px;font-weight:700;color:var(--teal);min-width:38px}
+.ai{background:rgba(95,227,207,.06);border:1px solid rgba(95,227,207,.2);border-radius:8px;padding:11px 13px;font-size:12px;color:var(--tp);line-height:1.6}
+.ail{font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--teal);margin-bottom:4px}
+#toast{position:fixed;bottom:24px;right:24px;background:var(--navy);color:#fff;padding:10px 16px;border-radius:8px;font-size:12px;font-weight:500;box-shadow:0 8px 32px rgba(0,0,0,.3);transform:translateY(80px);opacity:0;transition:.3s;z-index:999;max-width:300px;display:flex;align-items:center;gap:8px}
+#toast.show{transform:translateY(0);opacity:1}
+.ov{position:fixed;inset:0;background:rgba(13,31,45,.75);z-index:200;display:flex;align-items:center;justify-content:center}
+.ov.h{display:none}
+.mdl{background:var(--card);border-radius:12px;padding:24px;width:380px;max-width:92vw;border:1px solid var(--bd);box-shadow:0 20px 60px rgba(0,0,0,.2)}
+.mdl-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.mdl-t{font-size:15px;font-weight:700}
+.mdl-x{cursor:pointer;color:var(--ts);font-size:20px;line-height:1;padding:2px 7px;border-radius:4px}
+.mdl-x:hover{background:var(--surface)}
+.fg{margin-bottom:13px}
+.fg label{display:block;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--ts);margin-bottom:4px}
+.inp{width:100%;background:var(--surface);border:1px solid var(--bd);border-radius:6px;padding:8px 10px;font-size:12px;font-family:inherit;color:var(--tp);outline:none;transition:.15s}
+.inp:focus{border-color:var(--teal);background:#fff}
+.sel2{width:100%;background:var(--surface);border:1px solid var(--bd);border-radius:6px;padding:8px 10px;font-size:12px;font-family:inherit;color:var(--tp);outline:none;cursor:pointer;appearance:auto}
+.inote{font-size:10px;color:var(--tm);margin-top:4px}
+.cp{background:rgba(95,227,207,.04);border:1px solid rgba(95,227,207,.18);border-radius:8px;padding:11px 13px;margin-bottom:11px}
+.cptitle{font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--teal);margin-bottom:8px}
+.cpg{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.cpi{font-size:11px;padding:6px 8px;background:rgba(255,255,255,.55);border-radius:5px}
+.cpin{font-size:9px;color:var(--tm);margin-bottom:2px;text-transform:uppercase;letter-spacing:.4px;font-weight:600}
+.cpiv{font-weight:600}.cpiv.w{color:var(--wa)}.cpiv.c{color:var(--cr)}.cpiv.o{color:var(--ok)}
+.mb{font-size:10px;color:var(--tm);margin-top:7px;padding-top:7px;border-top:1px solid var(--bd);display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.mb .mc{background:var(--td);color:var(--teal);padding:1px 6px;border-radius:3px;font-weight:600;font-size:10px;font-family:monospace}
+.pip{display:flex;align-items:center;flex-wrap:wrap;gap:3px;margin-bottom:11px}
+.pst{padding:3px 8px;border-radius:4px;font-size:10px;font-weight:600;white-space:nowrap}
+.pst.d{background:rgba(16,185,129,.1);color:var(--ok)}
+.pst.a{background:var(--td);color:var(--teal);border:1px dashed rgba(95,227,207,.35)}
+.pst.p{background:var(--surface);color:var(--tm);border:1px solid var(--bd)}
+.par{color:var(--tm);font-size:11px;padding:0 1px}
+.dprev{background:#0a1929;border-radius:7px;padding:12px 14px;font-family:'Courier New',monospace;font-size:11px;color:#8899aa;overflow:hidden;line-height:1.75;border:1px solid rgba(95,227,207,.12);margin-bottom:10px}
+.dprev .dpt{color:#5fe3cf;font-weight:700}
+.dprev .dps{color:#1e3448}
+.dprev .dph{color:#ef4444;font-weight:700}
+.dprev .dpl{color:#3d5970;min-width:105px;display:inline-block}
+.dprev .dpv{color:#94a3b8}
+.ccm{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-top:9px}
+.ccmi{background:var(--surface);border-radius:5px;padding:6px 7px;text-align:center}
+.ccmv{font-size:13px;font-weight:700;font-variant-numeric:tabular-nums}
+.ccml{font-size:9px;color:var(--tm);text-transform:uppercase;letter-spacing:.4px;margin-top:1px}
+.fmat{width:100%;border-collapse:collapse;font-size:11px;margin-top:7px}
+.fmat th{background:var(--navy);color:rgba(255,255,255,.65);padding:6px 9px;font-size:9px;font-weight:700;letter-spacing:.4px;text-align:center}
+.fmat th:first-child{text-align:left}
+.fmat td{padding:5px 9px;border-bottom:1px solid var(--bd);text-align:center;font-size:11px}
+.fmat td:first-child{text-align:left;color:var(--ts);font-size:10px;font-weight:600}
+.fmat .fsrow td{font-weight:700;border-top:2px solid var(--bd);background:rgba(13,31,45,.03)}
+.fcc{color:var(--ok);font-weight:700}.fcw{color:var(--wa);font-weight:700}.fcx{color:var(--cr);font-weight:700}
+.phcon{border:1px solid var(--bd);border-radius:7px;padding:12px 14px;margin-bottom:10px}
+.phdr{font-size:9px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.phnum{width:17px;height:17px;border-radius:50%;background:var(--navy);color:#fff;font-size:9px;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0}
+.phnum.ok{background:var(--ok)}
+.abt{width:100%;border-collapse:collapse;font-size:11px}
+.abt th{text-align:left;font-size:9px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--tm);padding:0 7px 5px;border-bottom:1px solid var(--bd)}
+.abt td{padding:5px 7px;border-bottom:1px solid var(--bd);vertical-align:middle}
+.abt tr:last-child td{border-bottom:none}
+.gbar{height:4px;background:var(--bd);border-radius:2px;width:44px;display:inline-block;vertical-align:middle;margin-left:3px}
+.gbarf{height:100%;border-radius:2px}
+.pens{font-size:10px;font-weight:700;padding:2px 6px;border-radius:3px;white-space:nowrap}
+.pens.ok{background:rgba(16,185,129,.1);color:var(--ok)}
+.pens.wa{background:rgba(245,158,11,.1);color:var(--wa)}
+.pens.cr{background:rgba(239,68,68,.1);color:var(--cr)}
+.optbox{background:var(--navy);border-radius:7px;padding:10px 12px;font-family:'Courier New',monospace;font-size:10px;color:rgba(255,255,255,.5);margin-bottom:9px;line-height:1.65}
+.ot2{color:#5fe3cf;font-weight:700}.ov2{color:#fff}.ow2{color:#f59e0b}.ook{color:#10b981}
+.dcop{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-top:7px}
+.dcopc{background:var(--surface);border-radius:4px;padding:5px 7px;text-align:center}
+.dcopv{font-size:13px;font-weight:700;font-variant-numeric:tabular-nums}
+.dcopl{font-size:9px;color:var(--tm);text-transform:uppercase;letter-spacing:.4px;margin-top:1px}
+.wdr{display:flex;align-items:center;justify-content:space-between;padding:4px 0;font-size:11px;border-bottom:1px solid var(--bd)}
+.wdr:last-child{border-bottom:none}
+.wdn{color:var(--ts)}.wdv{font-weight:600}.wdv.c{color:var(--cr)}.wdv.w{color:var(--wa)}
+::-webkit-scrollbar{width:5px;height:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--bd);border-radius:3px}
+</style><div id="toast"></div>
+<div class="ov h" id="cfgOv">
+<div class="mdl">
+<div class="mdl-h"><span class="mdl-t">AI Settings</span><span class="mdl-x" onclick="document.getElementById('cfgOv').classList.add('h')">&#215;</span></div>
+<div class="fg"><label>Provider</label><select id="cfgProv" class="sel2" onchange="updProv()"><option value="anthropic">Anthropic</option><option value="openai">OpenAI</option><option value="azure">Azure OpenAI</option></select></div>
+<div class="fg"><label>Model</label><select id="cfgModel" class="sel2"><option value="claude-sonnet-4-6">claude-sonnet-4-6</option><option value="claude-opus-4-5">claude-opus-4-5</option><option value="claude-haiku-4-5">claude-haiku-4-5-20251001</option><option value="gpt-4o">gpt-4o</option><option value="gpt-4o-mini">gpt-4o-mini</option></select></div>
+<div class="fg"><label>API Key</label><input id="cfgKey" class="inp" type="password" placeholder="sk-ant-... or sk-... (optional for demo)"><div class="inote">Stored in localStorage. Never sent to any server in demo mode.</div></div>
+<div style="display:flex;gap:8px;justify-content:flex-end"><button class="btn bs" onclick="document.getElementById('cfgOv').classList.add('h')">Cancel</button><button class="btn bp" onclick="saveCfg()">Save Settings</button></div>
+</div></div>
+<div id="tb">
+<div class="logo">Infyslate <span>Control Tower</span></div>
+<div class="sbg">Phase 0</div>
+<div class="sp"></div>
+<button class="tbtn" onclick="document.getElementById('cfgOv').classList.remove('h')">&#9881; AI Settings</button>
+<div class="bell" onclick="nav('oos')">&#128276;<div class="bb" id="bellBadge">6</div></div>
+<div class="stic" onclick="nav('home')" title="Home">&#8962;</div>
+</div>
+<div id="layout">
+<div id="sb">
+<div class="nl">Operations</div>
+<div class="ni active" onclick="nav('home')" id="ni-home"><span class="nic">&#128202;</span>Control Tower<span class="nb am" id="nb-home">3</span></div>
+<div class="ni" onclick="nav('oos')" id="ni-oos"><span class="nic">&#9888;</span>Out-of-Stock AI<span class="nb" id="nb-oos">6</span></div>
+<div class="ni" onclick="nav('xf')" id="ni-xf"><span class="nic">&#8644;</span>Stock Transfer<span class="nb am" id="nb-xf">4</span></div>
+<div class="ni" onclick="nav('re')" id="ni-re"><span class="nic">&#9873;</span>Reconciliation<span class="nb" id="nb-re">7</span></div>
+<div class="ni" onclick="nav('sa')" id="ni-sa"><span class="nic">&#128722;</span>Salvage / Liq. AI<span class="nb am" id="nb-sa">3</span></div>
+<div class="nl">Planning</div>
+<div class="ni" onclick="nav('rp')" id="ni-rp"><span class="nic">&#128200;</span>Replenishment</div>
+<div class="ni" onclick="nav('do')" id="ni-do"><span class="nic">&#128196;</span>Document AI</div>
+<div class="ni" onclick="nav('tp')" id="ni-tp"><span class="nic">&#128666;</span>3PL Control</div>
+</div>
+<div id="ct"></div>
+</div>
+<script>
+var CFG={key:'',model:'claude-sonnet-4-6',provider:'anthropic'};
+try{var _c=JSON.parse(localStorage.getItem('ct_cfg')||'{}');CFG.key=_c.key||'';CFG.model=_c.model||CFG.model;CFG.provider=_c.provider||CFG.provider;}catch(e){}
+var S={mod:'home',app:new Set(),sO:'SKU-003',sR:'PO-089',sD:0,sP:'SKU-001',sSA:'SKU-026',sl:95,
+al:[{id:'a1',sv:'critical',lbl:'OOS Alert',msg:'SKU-003 Wireless Earbuds X3 — Dallas DC OOS in 8d, $39/d lost',mod:'oos'},
+{id:'a2',sv:'critical',lbl:'OOS Alert',msg:'SKU-017 Compression Leggings — Philadelphia DC OOS in 9d, $314/d lost',mod:'oos'},
+{id:'a3',sv:'warning',lbl:'OOS Alert',msg:'SKU-089 Portable Blender — Seattle DC OOS in 6d, $197/d lost',mod:'oos'},
+{id:'a4',sv:'warning',lbl:'Recon Flag',msg:'PO-095 Duplicate Invoice — $1,890 exposure, deadline Nov 10',mod:'re'},
+{id:'a5',sv:'warning',lbl:'Salvage',msg:'SKU-078 Electric Wine Opener 201d aged — PAST write-down threshold',mod:'sa'},
+{id:'a6',sv:'warning',lbl:'Recon Flag',msg:'PO-098 Missing GR — $3,200 blocked, vendor threatening suspension',mod:'re'},
+{id:'a7',sv:'warning',lbl:'OOS Alert',msg:'SKU-042 Compost Bin — Atlanta DC OOS in 5d, $114/d lost',mod:'oos'},
+{id:'a8',sv:'warning',lbl:'OOS Alert',msg:'SKU-112 Foam Roller Set — LA DC OOS in 3d, $59/d lost',mod:'oos'}]};
+var LO=[{id:'LOC-A',ab:'CHI',x:290,y:118},{id:'LOC-B',ab:'ATL',x:328,y:196},{id:'LOC-C',ab:'DAL',x:228,y:228},{id:'LOC-D',ab:'LAX',x:82,y:192},{id:'LOC-E',ab:'PHL',x:408,y:94},{id:'LOC-F',ab:'SEA',x:72,y:60}];
+var OO=[
+{id:'SKU-003',n:'Wireless Earbuds X3',lN:'Dallas DC',loc:'LOC-C',oh:76,v:8.4,d:9.0,sv:'vc',rop:200,lt:7,cost:4.65,lost:39,vendor:'SoundTech',cat:'Electronics'},
+{id:'SKU-017',n:'Compression Leggings Pro',lN:'Philadelphia DC',loc:'LOC-E',oh:109,v:9.1,d:12.0,sv:'vc',rop:280,lt:14,cost:34.50,lost:314,vendor:'ActiveWear Co',cat:'Apparel'},
+{id:'SKU-089',n:'Portable Blender Pro',lN:'Seattle DC',loc:'LOC-F',oh:142,v:6.8,d:20.9,sv:'vw',rop:180,lt:7,cost:28.90,lost:197,vendor:'KitchenMate',cat:'Kitchen'},
+{id:'SKU-042',n:'Compost Bin Countertop',lN:'Atlanta DC',loc:'LOC-B',oh:93,v:5.2,d:17.9,sv:'vw',rop:160,lt:10,cost:22.00,lost:114,vendor:'EcoHome',cat:'Home Goods'},
+{id:'SKU-112',n:'Foam Roller Set XL',lN:'LA DC',loc:'LOC-D',oh:88,v:3.2,d:27.5,sv:'vw',rop:120,lt:5,cost:18.50,lost:59,vendor:'FitPro',cat:'Sports'},
+{id:'SKU-156',n:'Smart Thermostat V2',lN:'Chicago DC',loc:'LOC-A',oh:195,v:6.9,d:28.3,sv:'vw',rop:250,lt:14,cost:62.00,lost:426,vendor:'SmartHome Inc',cat:'Electronics'}];
+var XF=[
+{id:'TR-001',sn:'Wireless Earbuds X3',fn:'Chicago DC',tn:'Dallas DC',u:300,sav:2800,p:'bc',eta:'24h',al:'a1',fL:'LOC-A',tL:'LOC-C',cpuEst:1.84,ontime:94},
+{id:'TR-002',sn:'Compression Leggings Pro',fn:'Atlanta DC',tn:'Philadelphia DC',u:180,sav:1420,p:'bw',eta:'36h',al:'a2',fL:'LOC-B',tL:'LOC-E',cpuEst:3.20,ontime:81},
+{id:'TR-003',sn:'Portable Blender Pro',fn:'Philadelphia DC',tn:'Seattle DC',u:120,sav:880,p:'bw',eta:'48h',al:'a3',fL:'LOC-E',tL:'LOC-F',cpuEst:4.65,ontime:88},
+{id:'TR-004',sn:'Foam Roller Set XL',fn:'Chicago DC',tn:'LA DC',u:90,sav:620,p:'bo',eta:'72h',al:null,fL:'LOC-A',tL:'LOC-D',cpuEst:5.10,ontime:92}];
+var XFCon={
+'TR-001':{demCap:420,palletFree:460,palletNeed:15,docksAvail:4,docksTotal:8,trucks:2,dispOpen:true,score:96,destDOS:11},
+'TR-002':{demCap:380,palletFree:140,palletNeed:9,docksAvail:1,docksTotal:6,trucks:1,dispOpen:false,score:71,destDOS:7},
+'TR-003':{demCap:310,palletFree:450,palletNeed:6,docksAvail:2,docksTotal:6,trucks:2,dispOpen:true,score:88,destDOS:14},
+'TR-004':{demCap:260,palletFree:360,palletNeed:5,docksAvail:4,docksTotal:5,trucks:3,dispOpen:true,score:94,destDOS:19}};
+var DCOps={
+'LOC-A':{name:'Chicago DC',palletSlots:2800,palletUsed:2340,docks:8,docksAvail:3,trucks:4,trucksAvail:2,util:84},
+'LOC-B':{name:'Atlanta DC',palletSlots:1800,palletUsed:1620,docks:6,docksAvail:1,trucks:3,trucksAvail:1,util:90},
+'LOC-C':{name:'Dallas DC',palletSlots:2200,palletUsed:1890,docks:7,docksAvail:4,trucks:5,trucksAvail:3,util:86},
+'LOC-D':{name:'LA DC',palletSlots:1600,palletUsed:1240,docks:5,docksAvail:4,trucks:4,trucksAvail:3,util:78},
+'LOC-E':{name:'Philadelphia DC',palletSlots:2000,palletUsed:1760,docks:6,docksAvail:2,trucks:3,trucksAvail:2,util:88},
+'LOC-F':{name:'Seattle DC',palletSlots:1500,palletUsed:1050,docks:5,docksAvail:4,trucks:3,trucksAvail:2,util:70}};
+var DCap={
+'LOC-A':{name:'Chicago DC',cap:600,used:486,wind:'Mon/Wed/Fri',cut:'2:00 PM'},
+'LOC-B':{name:'Atlanta DC',cap:380,used:342,wind:'Tue/Thu',cut:'1:00 PM'},
+'LOC-C':{name:'Dallas DC',cap:500,used:310,wind:'Mon–Fri',cut:'3:00 PM'},
+'LOC-D':{name:'LA DC',cap:420,used:280,wind:'Mon/Wed/Fri',cut:'12:00 PM'},
+'LOC-E':{name:'Philadelphia DC',cap:450,used:398,wind:'Tue/Thu/Sat',cut:'2:30 PM'},
+'LOC-F':{name:'Seattle DC',cap:350,used:198,wind:'Mon/Wed',cut:'1:30 PM'}};var RE=[
+{id:'PO-089',vn:'Apex Electronics',ty:'Price Variance',sv:'bc',po:'$4.20/unit',gr:'$4.20/unit',iv:'$4.65/unit',ex:'$2,100',pen:'§12.4 chargeback eligible',penSt:'Chargeback sent',penColor:'ok',penAmt:'$2,100',ds:'Invoice unit price $4.65 exceeds PO agreed price $4.20 on 300 units. Variance: $0.45/unit × $4,667 total shipment.',days:3,due:'Nov 09'},
+{id:'PO-091',vn:'TechBridge Co.',ty:'Short Shipment',sv:'bc',po:'500 units',gr:'500 units',iv:'482 units',ex:'$828',pen:'§8.1 shortage penalty 2% per unit',penSt:'Debit note issued',penColor:'ok',penAmt:'$828',ds:'PO called for 500 units. Only 482 received per GRN-2847. 18-unit shortfall × $46 = $828. Vendor claims lost in transit.',days:3,due:'Nov 11'},
+{id:'PO-095',vn:'Pacific Imports',ty:'Duplicate Invoice',sv:'bc',po:'INV-7843',gr:'Paid Oct 22',iv:'INV-7843 resubmit',ex:'$1,890',pen:'§15.2 duplicate submission fine $500',penSt:'Hold + fine',penColor:'wa',penAmt:'$2,390',ds:'Invoice INV-7843 paid Oct 22 ($1,890). Same invoice resubmitted Nov 1 with new ref. AP team flagged via AI match. Payment blocked.',days:5,due:'Nov 10'},
+{id:'PO-098',vn:'GlobalSource Ltd.',ty:'Missing GR',sv:'bc',po:'PO-098',gr:'Not received',iv:'$3,200',ex:'$3,200',pen:'§9.3 no GR = payment block',penSt:'Payment blocked',penColor:'cr',penAmt:'$0',ds:'Vendor invoiced $3,200 but warehouse shows no GRN for this PO. Vendor threatening to escalate. Requires physical audit LOC-B.',days:5,due:'Nov 10'},
+{id:'PO-103',vn:'FastFreight LLC',ty:'Late Delivery',sv:'bw',po:'Nov 01 delivery',gr:'Nov 04 delivery',iv:'$12,400',ex:'$620',pen:'§11.6 late penalty 0.5%/day, 3 days',penSt:'Penalty applied',penColor:'ok',penAmt:'$186',ds:'Delivery contract specified Nov 1. Actual arrival Nov 4 — 3 days late. Penalty clause §11.6: 0.5% per day on invoice value. $12,400 × 1.5% = $186.',days:2,due:'Nov 12'},
+{id:'PO-107',vn:'Apex Electronics',ty:'Unauthorized Sub',sv:'bw',po:'Model XR-200',gr:'Model XR-200S received',iv:'$8,750',ex:'$8,750',pen:'§7.2 substitution without approval',penSt:'Return initiated',penColor:'wa',penAmt:'$8,750',ds:'PO specified XR-200 (approved BOM). Received XR-200S (unapproved substitute). Customer compliance at risk. Full return in progress.',days:4,due:'Nov 13'},
+{id:'PO-112',vn:'EastCoast Supply',ty:'Invoice Before PO',sv:'bw',po:'PO not issued',gr:'N/A',iv:'$5,500',ex:'$5,500',pen:'§4.1 invoice timing violation',penSt:'Vendor notified',penColor:'wa',penAmt:'$275',ds:'Invoice dated Oct 29 for goods not yet PO-approved. Procurement gate bypassed. Finance flagged anomaly. Vendor notified of policy violation.',days:1,due:'Nov 14'}];
+var SA=[
+{id:'SKU-026',n:'Leather Motorcycle Jacket',cat:'Apparel',dy:165,u:148,cogs:89,rec:7220,ch:['B-Stock','Jobber','eBay'],loc:'LOC-B',ageRisk:'medium'},
+{id:'SKU-032',n:'Smart Herb Garden Kit',cat:'Home Goods',dy:148,u:220,cogs:38,rec:5520,ch:['Amazon Liq.','B-Stock'],loc:'LOC-C',ageRisk:'low'},
+{id:'SKU-040',n:'Bamboo Cutting Board Set',cat:'Home Goods',dy:189,u:310,cogs:14,rec:3100,ch:['eBay','Jobber'],loc:'LOC-A',ageRisk:'high'},
+{id:'SKU-078',n:'Electric Wine Opener',cat:'Kitchen',dy:201,u:88,cogs:42,rec:2840,ch:['B-Stock','eBay'],loc:'LOC-F',ageRisk:'critical'},
+{id:'SKU-065',n:'Resistance Band Set Pro',cat:'Sports',dy:142,u:195,cogs:22,rec:3000,ch:['B-Stock','eBay'],loc:'LOC-F',ageRisk:'low'},
+{id:'SKU-091',n:'Portable Projector Mini',cat:'Electronics',dy:178,u:64,cogs:189,rec:8900,ch:['B-Stock','Amazon Liq.'],loc:'LOC-E',ageRisk:'medium'}];
+var SDA={
+'SKU-026':{'LOC-A':42,'LOC-C':35,'LOC-D':52,'LOC-E':31,'LOC-F':44},
+'SKU-032':{'LOC-A':28,'LOC-B':35,'LOC-D':48,'LOC-E':19,'LOC-F':25},
+'SKU-040':{'LOC-B':48,'LOC-C':65,'LOC-D':88,'LOC-E':55,'LOC-F':42},
+'SKU-078':{'LOC-A':12,'LOC-B':8,'LOC-C':15,'LOC-D':18,'LOC-E':9},
+'SKU-065':{'LOC-A':52,'LOC-B':44,'LOC-C':38,'LOC-E':47,'LOC-D':35},
+'SKU-091':{'LOC-A':8,'LOC-B':5,'LOC-C':12,'LOC-D':15,'LOC-F':9}};
+var SST={
+'SKU-026':{'LOC-A':88,'LOC-C':42,'LOC-D':15,'LOC-E':62,'LOC-F':8},
+'SKU-032':{'LOC-A':45,'LOC-B':28,'LOC-D':12,'LOC-E':38,'LOC-F':20},
+'SKU-040':{'LOC-B':62,'LOC-C':110,'LOC-D':45,'LOC-E':72,'LOC-F':38},
+'SKU-078':{'LOC-A':18,'LOC-B':5,'LOC-C':22,'LOC-D':30,'LOC-E':14},
+'SKU-065':{'LOC-A':68,'LOC-B':42,'LOC-C':35,'LOC-E':55,'LOC-D':28},
+'SKU-091':{'LOC-A':10,'LOC-B':4,'LOC-C':8,'LOC-D':20,'LOC-F':6}};
+var SCon={chMin:{'B-Stock':50,'eBay':1,'Jobber':100,'Amazon Liq.':200},chApp:{'B-Stock':3,'eBay':1,'Jobber':5,'Amazon Liq.':10},chRec:{'B-Stock':62,'eBay':71,'Jobber':48,'Amazon Liq.':55},reservePct:25,writeDownDay:200};
+var CA=[
+{id:'CAR-01',n:'FedEx Freight',ot:94,claims:0.8,cost:3.20,lanes:12,rating:'A',tdays:2.1,vol:1842,ytd:22100,dam:0.4},
+{id:'CAR-02',n:'XPO Logistics',ot:88,claims:1.4,cost:2.85,lanes:9,rating:'B+',tdays:2.6,vol:1241,ytd:14900,dam:0.9},
+{id:'CAR-03',n:'UPS Supply Chain',ot:91,claims:1.0,cost:3.05,lanes:14,rating:'A-',tdays:2.3,vol:1588,ytd:19100,dam:0.6},
+{id:'CAR-04',n:'Estes Express',ot:85,claims:1.9,cost:2.60,lanes:7,rating:'B',tdays:3.1,vol:892,ytd:10700,dam:1.3}];
+var DO=[
+{id:'DOC-001',nm:'FedEx Freight Invoice',ty:'Freight Invoice',st:'extracted',pg:3,sc:0.98,ts:'2 min ago',vn:'FedEx Freight',amt:'$12,440',date:'Nov 05 2026',prev:[]},
+{id:'DOC-002',nm:'PO-089 Purchase Order',ty:'Purchase Order',st:'review',pg:2,sc:0.91,ts:'8 min ago',vn:'Apex Electronics',amt:'$2,100',date:'Nov 04 2026',prev:[]},
+{id:'DOC-003',nm:'BOL-2847 Bill of Lading',ty:'Bill of Lading',st:'extracted',pg:1,sc:0.99,ts:'15 min ago',vn:'GlobalSource Ltd.',amt:null,date:'Nov 03 2026',prev:[]},
+{id:'DOC-004',nm:'GRN-5521 Receipt Note',ty:'Goods Receipt',st:'extracted',pg:2,sc:0.95,ts:'28 min ago',vn:'TechBridge Co.',amt:null,date:'Nov 03 2026',prev:[]},
+{id:'DOC-005',nm:'INV-7843 Resubmit',ty:'Vendor Invoice',st:'flagged',pg:1,sc:0.87,ts:'1h ago',vn:'Pacific Imports',amt:'$1,890',date:'Nov 01 2026',prev:[]}];
+var RP=[
+{id:'SKU-001',n:'Wireless Earbuds X3',oh:148,rop:200,eoq:400,lt:7,sl:96,dos:17,cost:4.65,sug:400,pr:'critical',cat:'Electronics',fc30:252,fc60:490},
+{id:'SKU-002',n:'Smart Watch Series 4',oh:312,rop:180,eoq:300,lt:10,sl:94,dos:28,cost:48.00,sug:300,pr:'normal',cat:'Electronics',fc30:333,fc60:645},
+{id:'SKU-005',n:'Compression Leggings Pro',oh:88,rop:250,eoq:500,lt:14,sl:91,dos:10,cost:34.50,sug:500,pr:'critical',cat:'Apparel',fc30:264,fc60:528},
+{id:'SKU-008',n:'Foam Roller Set XL',oh:142,rop:120,eoq:280,lt:5,sl:98,dos:44,cost:18.50,sug:0,pr:'normal',cat:'Sports',fc30:96,fc60:192},
+{id:'SKU-012',n:'Portable Blender Pro',oh:76,rop:160,eoq:320,lt:7,sl:89,dos:11,cost:28.90,sug:320,pr:'high',cat:'Kitchen',fc30:208,fc60:416},
+{id:'SKU-015',n:'Smart Thermostat V2',oh:224,rop:220,eoq:440,lt:14,sl:95,dos:32,cost:62.00,sug:440,pr:'normal',cat:'Electronics',fc30:210,fc60:420},
+{id:'SKU-018',n:'Bamboo Cutting Board Set',oh:445,rop:100,eoq:200,lt:5,sl:97,dos:89,cost:14.00,sug:0,pr:'excess',cat:'Home Goods',fc30:150,fc60:300},
+{id:'SKU-022',n:'Leather Motorcycle Jacket',oh:38,rop:60,eoq:120,lt:21,sl:88,dos:9,cost:89.00,sug:120,pr:'high',cat:'Apparel',fc30:126,fc60:252},
+{id:'SKU-029',n:'Electric Wine Opener',oh:198,rop:80,eoq:160,lt:7,sl:96,dos:49,cost:42.00,sug:0,pr:'normal',cat:'Kitchen',fc30:120,fc60:240},
+{id:'SKU-033',n:'Resistance Band Set Pro',oh:310,rop:140,eoq:280,lt:5,sl:97,dos:65,cost:22.00,sug:0,pr:'excess',cat:'Sports',fc30:144,fc60:288}];function rng(s){var x=s|0;return function(){x=Math.imul(x,1664525)+1013904223|0;return(x>>>0)/4294967296};}
+function fmt$(n){return'$'+n.toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0});}
+function pct(n){return Math.round(n)+'%';}
+function dn(vals,cols,r,sw){
+  var total=vals.reduce(function(a,b){return a+b;},0),s='';
+  var cx=r+sw/2,cy=r+sw/2,ri=r-sw/2;
+  var ang=-Math.PI/2;
+  vals.forEach(function(v,i){
+    var slice=2*Math.PI*v/total,ea=ang+slice;
+    var x1=cx+r*Math.cos(ang),y1=cy+r*Math.sin(ang);
+    var x2=cx+r*Math.cos(ea),y2=cy+r*Math.sin(ea);
+    var lf=slice>Math.PI?1:0;
+    s+='<path d="M '+cx+' '+cy+' L '+x1+' '+y1+' A '+r+' '+r+' 0 '+lf+' 1 '+x2+' '+y2+' Z" fill="'+cols[i%cols.length]+'" stroke="var(--card)" stroke-width="2"/>';
+    ang=ea;
+  });
+  return '<svg viewBox="0 0 '+(2*r+sw)+' '+(2*r+sw)+'" style="width:'+(2*r+sw)+'px;height:'+(2*r+sw)+'px">'+s+'</svg>';
+}
+function ply(pts,w,h,col,fill){
+  if(!pts||pts.length<2)return '';
+  var mn=Math.min.apply(null,pts),mx=Math.max.apply(null,pts);
+  var rng=mx-mn||1;
+  var xs=pts.map(function(_,i){return i/(pts.length-1)*w;});
+  var ys=pts.map(function(v){return h-(v-mn)/rng*(h-8)-4;});
+  var path='M '+xs[0]+' '+ys[0];
+  for(var i=1;i<xs.length;i++)path+=' L '+xs[i]+' '+ys[i];
+  var area=path+' L '+xs[xs.length-1]+' '+h+' L '+xs[0]+' '+h+' Z';
+  return '<svg viewBox="0 0 '+w+' '+h+'" style="width:100%;height:'+h+'px;overflow:visible">'+(fill?'<path d="'+area+'" fill="'+fill+'" opacity=".15"/>':'')+'<path d="'+path+'" fill="none" stroke="'+col+'" stroke-width="2"/></svg>';
+}
+function afl(a,b,w,h,ca,cb){
+  if(!a||a.length<2)return '';
+  var all=a.concat(b),mn=Math.min.apply(null,all),mx=Math.max.apply(null,all),rng=mx-mn||1;
+  function mkp(arr){var xs=arr.map(function(_,i){return i/(arr.length-1)*w;});var ys=arr.map(function(v){return h-(v-mn)/rng*(h-8)-4;});var p='M '+xs[0]+' '+ys[0];for(var i=1;i<xs.length;i++)p+=' L '+xs[i]+' '+ys[i];return p;}
+  var pa=mkp(a),pb=mkp(b);
+  return '<svg viewBox="0 0 '+w+' '+h+'" style="width:100%;height:'+h+'px"><path d="'+pa+'" fill="none" stroke="'+ca+'" stroke-width="2"/><path d="'+pb+'" fill="none" stroke="'+cb+'" stroke-width="2" stroke-dasharray="4,2"/></svg>';
+}
+function hm(rows,cols,data,cellW,cellH){
+  var mx=Math.max.apply(null,data.map(function(r){return Math.max.apply(null,r);}));
+  var s='<svg viewBox="0 0 '+(cols.length*cellW+60)+' '+(rows.length*cellH+28)+'" style="width:100%;overflow:visible">';
+  cols.forEach(function(c,i){s+='<text x="'+(60+i*cellW+cellW/2)+'" y="14" text-anchor="middle" font-size="9" fill="var(--tm)" font-family="Inter,sans-serif">'+c+'</text>';});
+  rows.forEach(function(r,ri){
+    s+='<text x="55" y="'+(28+ri*cellH+cellH/2+4)+'" text-anchor="end" font-size="9" fill="var(--tm)" font-family="Inter,sans-serif">'+r+'</text>';
+    data[ri].forEach(function(v,ci){
+      var op=v/mx;
+      var col=op>0.75?'#ef4444':op>0.45?'#f59e0b':'#10b981';
+      s+='<rect x="'+(61+ci*cellW)+'" y="'+(26+ri*cellH)+'" width="'+(cellW-3)+'" height="'+(cellH-3)+'" rx="3" fill="'+col+'" opacity="'+op+'"/>';
+      s+='<text x="'+(61+ci*cellW+cellW/2)+'" y="'+(26+ri*cellH+cellH/2+4)+'" text-anchor="middle" font-size="9" fill="#fff" font-weight="700" font-family="Inter,sans-serif">'+v+'</text>';
+    });
+  });
+  s+='</svg>';return s;
+}
+function nm(links){
+  var s='<svg viewBox="0 0 500 290" style="width:100%;height:160px">';
+  s+='<g opacity="0.07"><rect x="0" y="0" width="500" height="290" fill="#ffffff"/>';
+  for(var _fi=0;_fi<7;_fi++)s+='<rect x="0" y="'+(_fi*44.62).toFixed(2)+'" width="500" height="22.31" fill="#B22234"/>';
+  s+='<rect x="0" y="0" width="200" height="156.15" fill="#3C3B6E"/></g>';
+  links.forEach(function(l){
+    var f=LO.find(function(o){return o.id===l.f;}),t=LO.find(function(o){return o.id===l.t;});
+    if(!f||!t)return;
+    var col=l.a?'#10b981':l.p==='bc'?'#ef4444':'#f59e0b';
+    s+='<line x1="'+f.x+'" y1="'+f.y+'" x2="'+t.x+'" y2="'+t.y+'" stroke="'+col+'" stroke-width="'+(l.a?1.5:2.5)+'" stroke-dasharray="'+(l.a?'5,3':'0')+'" opacity=".7"/>';
+  });
+  LO.forEach(function(l){
+    s+='<circle cx="'+l.x+'" cy="'+l.y+'" r="11" fill="var(--navy)" stroke="var(--teal)" stroke-width="1.5"/>';
+    s+='<text x="'+l.x+'" y="'+(l.y+4)+'" text-anchor="middle" font-size="8" font-weight="700" fill="#fff" font-family="Inter,sans-serif">'+l.ab+'</text>';
+  });
+  s+='</svg>';return s;
+}
+function mBadge(){
+  var m=CFG.model||'claude-sonnet-4-6';
+  var kst=CFG.key?'<span style="color:var(--ok)">&#10003; API key</span>':'<span style="color:var(--wa)">&#9888; Demo mode</span>';
+  return '<div class="mb"><span class="mc">'+m+'</span>'+kst+' <span>&#183; 2m ago</span></div>';
+}
+function salAbs(sku){
+  var sd=SDA[sku.id]||{},ss=SST[sku.id]||{};
+  var res=[];
+  LO.forEach(function(l){
+    if(l.id===sku.loc)return;
+    var d=sd[l.id]||0,st=ss[l.id]||0,gap=Math.max(0,d-st);
+    var ops=DCOps[l.id],palOk=ops?((ops.palletSlots-ops.palletUsed)>=Math.ceil(Math.min(gap,sku.u)/20)):false;
+    var dockOk=ops?ops.docksAvail>=1:false;
+    if(d>0)res.push({id:l.id,ab:l.ab,name:(DCap[l.id]||{name:l.ab}).name,
+      demand:d,stock:st,gap:gap,absorb:Math.min(gap,sku.u),
+      palOk:palOk,dockOk:dockOk,feasible:gap>0&&palOk&&dockOk});
+  });
+  return res;
+}
+function ivBars(items,maxV){
+  if(!maxV)maxV=Math.max.apply(null,items.map(function(o){return Math.max(o.oh,o.rop);}));
+  var h='';
+  items.forEach(function(o){
+    var ohPct=Math.round(o.oh/maxV*100),ropPct=Math.min(99,Math.round(o.rop/maxV*100));
+    var c=o.oh<o.rop?'var(--cr)':o.oh<o.rop*1.3?'var(--wa)':'var(--ok)';
+    h+='<div style="margin-bottom:8px">';
+    h+='<div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px">';
+    h+='<span style="color:var(--tp);font-weight:500">'+o.id+'</span>';
+    h+='<span style="font-weight:700;color:'+c+'">'+o.oh+'u &nbsp;<span style="color:var(--tm);font-weight:400">/ '+o.rop+'u ROP</span></span>';
+    h+='</div>';
+    h+='<div style="position:relative;height:8px;background:var(--bd);border-radius:4px">';
+    h+='<div style="width:'+ohPct+'%;height:100%;background:'+c+';border-radius:4px"></div>';
+    h+='<div style="position:absolute;top:-4px;bottom:-4px;left:'+ropPct+'%;width:2px;background:var(--navy);border-radius:1px;z-index:2"></div>';
+    h+='</div></div>';
+  });
+  return h;
+}
+function ageBars(items){
+  var h='';
+  items.forEach(function(o){
+    var pct=Math.min(100,Math.round(o.dy/SCon.writeDownDay*100));
+    var c=o.dy>SCon.writeDownDay?'var(--cr)':o.dy>180?'var(--wa)':o.dy>150?'#f59e0b':'var(--ok)';
+    var rem=SCon.writeDownDay-o.dy;
+    var label=o.dy>SCon.writeDownDay?'<span style="color:var(--cr);font-weight:700">PAST threshold</span>':rem+'d to threshold';
+    h+='<div style="margin-bottom:9px">';
+    h+='<div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px">';
+    h+='<span style="font-weight:500;color:var(--tp)">'+o.id+'</span>';
+    h+='<span style="color:'+c+';font-weight:700">'+o.dy+'d / 200d</span>';
+    h+='</div>';
+    h+='<div style="position:relative;height:8px;background:var(--bd);border-radius:4px">';
+    h+='<div style="width:'+pct+'%;height:100%;background:'+c+';border-radius:4px"></div>';
+    h+='<div style="position:absolute;top:-4px;bottom:-4px;right:0;width:2px;background:var(--navy);border-radius:1px"></div>';
+    h+='</div>';
+    h+='<div style="font-size:10px;color:var(--ts);margin-top:2px">'+label+'</div>';
+    h+='</div>';
+  });
+  return h;
+}
+function nav(m){
+  S.mod=m;
+  document.querySelectorAll('.ni').forEach(function(el){el.classList.remove('active');});
+  var ni=document.getElementById('ni-'+m);
+  if(ni)ni.classList.add('active');
+  var ct=document.getElementById('ct');
+  if(m==='home')ct.innerHTML=rH();
+  else if(m==='oos')ct.innerHTML=rOOS();
+  else if(m==='xf')ct.innerHTML=rXF();
+  else if(m==='re')ct.innerHTML=rRE();
+  else if(m==='sa')ct.innerHTML=rSA();
+  else if(m==='rp')ct.innerHTML=rRP();
+  else if(m==='do')ct.innerHTML=rDO();
+  else if(m==='tp')ct.innerHTML=rTP();
+}
+function appX(id){
+  var x=XF.find(function(t){return t.id===id;});
+  if(!x||S.app.has(id))return;
+  S.app.add(id);
+  if(x.al){S.al=S.al.filter(function(a){return a.id!==x.al;});mBadges();}
+  toast('&#10003; Transfer '+id+' approved — ETA '+x.eta);
+  nav(S.mod);
+}
+function mBadges(){
+  var oos=OO.length,xf=XF.filter(function(x){return!S.app.has(x.id);}).length;
+  var nb=document.getElementById('bellBadge');
+  if(nb)nb.textContent=S.al.length;
+  var ne=document.getElementById('nb-oos');if(ne)ne.textContent=oos;
+  var nx=document.getElementById('nb-xf');if(nx){nx.textContent=xf;nx.className='nb'+(xf>0?' am':'');}
+}
+function toast(msg){
+  var t=document.getElementById('toast');
+  t.innerHTML=msg;t.classList.add('show');
+  setTimeout(function(){t.classList.remove('show');},3000);
+}
+function saveCfg(){
+  CFG.key=document.getElementById('cfgKey').value;
+  CFG.model=document.getElementById('cfgModel').value;
+  CFG.provider=document.getElementById('cfgProv').value;
+  localStorage.setItem('ct_cfg',JSON.stringify(CFG));
+  document.getElementById('cfgOv').classList.add('h');
+  toast('&#10003; AI settings saved');
+  nav(S.mod);
+}
+function updProv(){
+  var p=document.getElementById('cfgProv').value;
+  var m=document.getElementById('cfgModel');
+  if(p==='openai'){m.innerHTML='<option>gpt-4o</option><option>gpt-4o-mini</option>';}
+  else if(p==='azure'){m.innerHTML='<option>gpt-4o (azure)</option>';}
+  else{m.innerHTML='<option value="claude-sonnet-4-6">claude-sonnet-4-6</option><option value="claude-opus-4-5">claude-opus-4-5</option><option value="claude-haiku-4-5">claude-haiku-4-5-20251001</option>';}
+}function rH(){
+  var r=rng(42);
+  var wkD=[['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],[128,142,156,139,168,82,45],[98,112,126,109,138,62,25]];
+  var totLost=OO.reduce(function(a,o){return a+o.lost;},0);
+  var pend=RE.filter(function(r){return r.penColor!=='ok';}).length;
+  var h='<div class="ph"><div class="pt2">Control Tower &nbsp;<span class="ldot"></span></div>';
+  h+='<div class="ps2">Live operations — Nov 06 2026 &nbsp;&#183;&nbsp; 6 DCs &nbsp;&#183;&nbsp; Network health: <span style="color:var(--wa);font-weight:600">At Risk</span></div></div>';
+  h+='<div class="kg">';
+  h+='<div class="kt" onclick="nav(\'oos\')"><div class="kl">Revenue at Risk / Day</div><div class="kv vc">'+fmt$(totLost)+'</div><div class="ks">'+OO.length+' SKUs approaching OOS</div><div class="kv2">&#9650; $1,149/d vs yesterday</div></div>';
+  h+='<div class="kt" onclick="nav(\'xf\')"><div class="kl">Transfer Savings</div><div class="kv vo">$5,720</div><div class="ks">'+XF.length+' transfers queued</div><div class="kv2">'+S.app.size+' approved this session</div></div>';
+  h+='<div class="kt" onclick="nav(\'re\')"><div class="kl">Recon Exposure</div><div class="kv vw">$33,760</div><div class="ks">'+RE.length+' issues flagged</div><div class="kv2">'+pend+' pending resolution</div></div>';
+  h+='<div class="kt" onclick="nav(\'sa\')"><div class="kl">Salvage Recovery</div><div class="kv vo">$30,580</div><div class="ks">'+SA.length+' SKUs candidates</div><div class="kv2">1 past write-down threshold</div></div>';
+  h+='</div>';
+  h+='<div class="tc">';
+  h+='<div>';
+  h+='<div class="card"><div class="ctitle">Priority Alerts <span class="aib">LIVE</span></div>';
+  h+='<div class="af">';
+  S.al.slice(0,5).forEach(function(a){
+    h+='<div class="ac '+a.sv+(S.app.has(a.id)?'res':'')+'" onclick="nav(\''+a.mod+'\')"><span class="asv '+a.sv+'">'+a.lbl+'</span><span class="at">'+a.msg+'</span><span class="ati">now</span></div>';
+  });
+  h+='</div></div>';
+  h+='<div class="card"><div class="ctitle">Throughput — Last 7 Days <span class="aib">TREND</span></div>';
+  var pts1=wkD[1],pts2=wkD[2];
+  h+=afl(pts1,pts2,340,80,'var(--teal)','var(--wa)');
+  h+='<div style="display:flex;gap:16px;margin-top:7px;font-size:11px"><span style="color:var(--teal)">&#9644; Outbound</span><span style="color:var(--wa)">&#9644; Inbound</span></div>';
+  var totOut=pts1.reduce(function(a,b){return a+b;},0),totIn=pts2.reduce(function(a,b){return a+b;},0);
+  h+='<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:10px">';
+  ['Outbound','Inbound','Net'].forEach(function(l,i){
+    var v=i===0?totOut:i===1?totIn:totOut-totIn;
+    h+='<div style="background:var(--surface);border-radius:5px;padding:7px;text-align:center"><div style="font-size:11px;font-weight:700">'+v+'</div><div style="font-size:9px;color:var(--tm)">'+l+' units</div></div>';
+  });
+  h+='</div></div>';
+  h+='<div class="card"><div class="ctitle">DC Network Status</div>';
+  h+='<table class="dt"><thead><tr><th>DC</th><th>Pallet Util</th><th>Docks Free</th><th>Trucks Avail</th><th>Status</th></tr></thead><tbody>';
+  LO.forEach(function(l){
+    var ops=DCOps[l.id];
+    var util=Math.round(ops.palletUsed/ops.palletSlots*100);
+    var stc=util>88?'<span class="bdg bc">Tight</span>':util>80?'<span class="bdg bw">Busy</span>':'<span class="bdg bo">OK</span>';
+    h+='<tr><td style="font-weight:600">'+ops.name+'</td><td>'+util+'%</td><td>'+ops.docksAvail+'/'+ops.docks+'</td><td>'+ops.trucksAvail+'/'+ops.trucks+'</td><td>'+stc+'</td></tr>';
+  });
+  h+='</tbody></table></div>';
+  h+='</div>';
+  h+='<div>';
+  h+='<div class="card"><div class="ctitle">Network Map <span class="aib">6 DCs</span></div>';
+  var links=XF.map(function(x){return{f:x.fL,t:x.tL,p:x.p,a:S.app.has(x.id)};});
+  h+=nm(links);
+  h+='<div style="display:flex;gap:12px;margin-top:7px;font-size:10px;flex-wrap:wrap">';
+  h+='<span><span style="color:var(--cr)">&#9644;</span> Critical transfer</span>';
+  h+='<span><span style="color:var(--wa)">&#9644;</span> Warning transfer</span>';
+  h+='<span><span style="color:var(--ok)">&#9644;</span> Approved</span>';
+  h+='</div></div>';
+  h+='<div class="card"><div class="ctitle">Module Activity <span class="aib">TODAY</span></div>';
+  var mods=[
+    {icon:'&#9888;',n:'Out-of-Stock AI',v:OO.length+' SKUs at risk',sub:fmt$(totLost)+'/day exposure',c:'var(--cr)'},
+    {icon:'&#8644;',n:'Stock Transfer',v:XF.length+' transfers ready',sub:S.app.size+' approved',c:'var(--wa)'},
+    {icon:'&#9873;',n:'Reconciliation',v:RE.length+' flagged issues',sub:'$33,760 total exposure',c:'var(--cr)'},
+    {icon:'&#128722;',n:'Salvage AI',v:SA.length+' candidates',sub:'1 past write-down threshold',c:'var(--wa)'},
+    {icon:'&#128200;',n:'Replenishment',v:'3 critical reorders',sub:'$8,620 order value',c:'var(--ok)'},
+    {icon:'&#128666;',n:'3PL Control',v:'4 carriers tracked',sub:'88% avg on-time',c:'var(--ok)'}];
+  mods.forEach(function(m){
+    h+='<div style="display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--bd)">';
+    h+='<div style="width:28px;height:28px;border-radius:6px;background:rgba(13,31,45,.06);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0">'+m.icon+'</div>';
+    h+='<div style="flex:1"><div style="font-size:12px;font-weight:600">'+m.n+'</div><div style="font-size:11px;color:var(--ts)">'+m.sub+'</div></div>';
+    h+='<div style="font-size:11px;font-weight:600;color:'+m.c+'">'+m.v+'</div>';
+    h+='</div>';
+  });
+  h+='</div>';
+  h+='<div class="card"><div class="ctitle">Financial Exposure Summary</div>';
+  var rows=[['Revenue at Risk (OOS)','$'+totLost+'/day','var(--cr)'],['Recon Disputes Open','$33,760','var(--cr)'],['Pending Chargebacks','$3,114','var(--wa)'],['Salvage Recoverable','$30,580','var(--ok)'],['Transfer Savings (queued)','$5,720','var(--ok)'],['3PL Claims YTD','$18,400','var(--wa)']];
+  rows.forEach(function(r){
+    h+='<div class="mr"><span class="mn">'+r[0]+'</span><span class="mv" style="color:'+r[2]+'">'+r[1]+'</span></div>';
+  });
+  h+='</div>';
+  h+='</div>';
+  h+='</div>';
+  return h;
+}
+function rOOS(){
+  var sel=OO.find(function(o){return o.id===S.sO;})||OO[0];
+  var r=rng(sel.id.charCodeAt(4)*7+99);
+  var pts=Array.from({length:14},function(){return+(sel.v*(0.7+r()*0.6)).toFixed(1);});
+  var totLost=OO.reduce(function(a,o){return a+o.lost;},0);
+  var h='<div class="ph"><div class="pt2">Out-of-Stock AI &nbsp;<span class="ldot"></span></div>';
+  h+='<div class="ps2">AI-driven stockout detection &nbsp;&#183;&nbsp; 6 at-risk SKUs &nbsp;&#183;&nbsp; Real-time velocity monitoring</div></div>';
+  h+='<div class="kg">';
+  h+='<div class="kt"><div class="kl">Total Revenue Lost/Day</div><div class="kv vc">'+fmt$(totLost)+'</div><div class="ks">Across all at-risk SKUs</div></div>';
+  h+='<div class="kt"><div class="kl">Avg Days to OOS</div><div class="kv vw">'+((OO.reduce(function(a,o){return a+o.d;},0)/OO.length).toFixed(1))+'d</div><div class="ks">Weighted by velocity</div></div>';
+  h+='<div class="kt"><div class="kl">Transfer Opportunities</div><div class="kv vo">4</div><div class="ks">3 linked to open transfers</div></div>';
+  h+='<div class="kt"><div class="kl">AI Accuracy</div><div class="kv vo">96.2%</div><div class="ks">Last 90 days vs actuals</div></div>';
+  h+='</div>';
+  h+='<div class="tc">';
+  h+='<div>';
+  h+='<div class="card"><div class="ctitle">At-Risk SKUs <span class="aib">LIVE</span></div>';
+  h+='<table class="dt"><thead><tr><th>SKU</th><th>Product</th><th>Location</th><th>OH</th><th>Vel/d</th><th>Days</th><th>$/d Lost</th><th>Status</th></tr></thead><tbody>';
+  OO.forEach(function(o){
+    var sc=o.id===S.sO?'sel':'';
+    var dc=o.d<10?'<span class="bdg bc">'+o.d.toFixed(0)+'d</span>':'<span class="bdg bw">'+o.d.toFixed(0)+'d</span>';
+    h+='<tr class="'+sc+'" onclick="S.sO=\''+o.id+'\';nav(\'oos\')"><td style="font-family:monospace;font-size:11px">'+o.id+'</td><td>'+o.n+'</td><td style="font-size:11px">'+o.lN+'</td><td style="font-weight:600;color:var(--cr)">'+o.oh+'</td><td>'+o.v+'</td><td>'+dc+'</td><td style="color:var(--cr);font-weight:600">$'+o.lost+'</td><td><span class="bdg '+o.sv+'">'+( o.sv==='vc'?'Critical':'Warning')+'</span></td></tr>';
+  });
+  h+='</tbody></table></div>';
+  h+='<div class="card"><div class="ctitle">Inventory vs Reorder Point — All SKUs</div>';
+  h+='<div style="font-size:10px;color:var(--tm);margin-bottom:8px">OH units vs ROP threshold (vertical bar). Below ROP = at risk.</div>';
+  h+=ivBars(OO,Math.max.apply(null,OO.map(function(o){return Math.max(o.oh,o.rop);})));
+  h+='</div>';
+  h+='<div class="card"><div class="ctitle">Demand Trend — '+sel.id+' ('+sel.n+')</div>';
+  h+=ply(pts,340,70,'var(--teal)','var(--teal)');
+  h+='<div style="display:flex;justify-content:space-between;font-size:10px;color:var(--tm);margin-top:3px"><span>14d ago</span><span>7d ago</span><span>Today</span></div>';
+  h+='<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin-top:9px">';
+  var trend14=pts.slice(0,7).reduce(function(a,b){return a+b;},0)/7;
+  var trend7=pts.slice(7).reduce(function(a,b){return a+b;},0)/7;
+  var chg=((trend7-trend14)/trend14*100).toFixed(1);
+  [['14d Avg',trend14.toFixed(1)+'/d'],['7d Avg',trend7.toFixed(1)+'/d'],['Trend',(chg>0?'+':'')+chg+'%']].forEach(function(x){
+    h+='<div style="background:var(--surface);border-radius:5px;padding:7px;text-align:center"><div style="font-size:12px;font-weight:700">'+x[1]+'</div><div style="font-size:9px;color:var(--tm)">'+x[0]+'</div></div>';
+  });
+  h+='</div></div>';
+  h+='</div>';
+  h+='<div>';
+  h+='<div class="card"><div class="ctitle">'+sel.id+' — '+sel.n+'</div>';
+  h+='<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:11px">';
+  [{l:'On-Hand',v:sel.oh+'u',c:sel.oh<sel.rop?'var(--cr)':'inherit'},{l:'Velocity/Day',v:sel.v+'u'},{l:'Days to OOS',v:sel.d.toFixed(0)+'d',c:sel.d<10?'var(--cr)':'var(--wa)'},
+   {l:'Reorder Point',v:sel.rop+'u'},{l:'Lead Time',v:sel.lt+'d'},{l:'Safety Stock',v:Math.round(sel.v*sel.lt*0.3)+'u'},
+   {l:'Unit Cost',v:'$'+sel.cost},{l:'$/Day Lost',v:'$'+sel.lost,c:'var(--cr)'},{l:'30d Exposure',v:'$'+(sel.lost*30).toLocaleString(),c:'var(--cr)'},
+   {l:'Vendor',v:sel.vendor},{l:'Category',v:sel.cat},{l:'Location',v:sel.lN}
+  ].forEach(function(x){
+    h+='<div style="background:var(--surface);border-radius:6px;padding:8px 10px"><div style="font-size:9px;color:var(--tm);font-weight:700;text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px">'+x.l+'</div>';
+    h+='<div style="font-size:13px;font-weight:700;color:'+(x.c||'var(--tp)')+'">'+x.v+'</div></div>';
+  });
+  h+='</div>';
+  h+='<div class="ctitle" style="margin-top:4px">Stockout Timeline — All SKUs</div>';
+  h+='<div style="font-size:10px;color:var(--tm);margin-bottom:8px">Days remaining before OOS (longer bar = more time)</div>';
+  OO.forEach(function(o){
+    var maxD=Math.max.apply(null,OO.map(function(x){return x.d;}));
+    var pct=Math.min(100,Math.round(o.d/maxD*100));
+    var c=o.d<10?'var(--cr)':o.d<15?'var(--wa)':'var(--ok)';
+    var today=new Date(2026,10,6);
+    var oos=new Date(today.getTime()+o.d*86400000);
+    var months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    var oosStr=months[oos.getMonth()]+' '+oos.getDate();
+    h+='<div style="margin-bottom:8px"><div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px">';
+    h+='<span style="font-weight:500">'+o.id+' '+o.n.substring(0,20)+'</span><span style="color:'+c+';font-weight:700">'+oosStr+' ('+o.d.toFixed(0)+'d)</span></div>';
+    h+='<div style="height:6px;background:var(--bd);border-radius:3px"><div style="width:'+pct+'%;height:100%;background:'+c+';border-radius:3px"></div></div></div>';
+  });
+  h+='</div>';
+  h+='<div class="card"><div class="ctitle">Transfer Availability</div>';
+  var linked=XF.filter(function(x){return x.sn===sel.n;});
+  if(linked.length){
+    linked.forEach(function(x){
+      h+='<div class="xc'+(S.app.has(x.id)?' ap':'')+'">';
+      h+='<div style="flex:1"><div style="font-size:12px;font-weight:600">'+x.id+' — '+x.fn+' &#8594; '+x.tn+'</div>';
+      h+='<div style="font-size:11px;color:var(--ts);margin-top:2px">'+x.u+' units &nbsp;&#183;&nbsp; ETA '+x.eta+' &nbsp;&#183;&nbsp; Saves $'+x.sav+'</div></div>';
+      if(!S.app.has(x.id)){h+='<button class="btn bp" onclick="appX(\''+x.id+'\')">&#10003; Approve</button>';}
+      else{h+='<span style="color:var(--ok);font-weight:600;font-size:12px">&#10003; Approved</span>';}
+      h+='</div>';
+    });
+  } else {
+    h+='<div style="font-size:12px;color:var(--ts);padding:8px 0">No linked transfers for this SKU. <a href="#" onclick="nav(\'xf\');return false" style="color:var(--teal)">View all transfers &#8594;</a></div>';
+  }
+  h+='</div>';
+  h+='<div class="ai"><div class="ail">&#9679; AI Analysis — '+CFG.model+'</div>';
+  h+='<strong>'+sel.id+' '+sel.n+':</strong> At current velocity '+sel.v+'u/day, stockout occurs in '+sel.d.toFixed(0)+' days. ';
+  h+='Reorder point threshold ('+sel.rop+'u) already breached — OH at '+sel.oh+'u. ';
+  h+='Recommend emergency reorder of '+Math.round(sel.v*sel.lt*2)+'u to cover lead time + safety stock. ';
+  if(linked.length)h+='Transfer '+linked[0].id+' ('+linked[0].u+'u from '+linked[0].fn+') can bridge the gap in '+linked[0].eta+'.';
+  h+=mBadge()+'</div>';
+  h+='</div>';
+  h+='</div>';
+  return h;
+}function rXF(){
+  var pen=XF.filter(function(x){return!S.app.has(x.id);});
+  var totSav=pen.reduce(function(a,x){return a+x.sav;},0);
+  var h='<div class="ph"><div class="pt2">Stock Transfer Optimization &nbsp;<span class="ldot"></span></div>';
+  h+='<div class="ps2">AI constraint solver — pallet capacity, dock availability, demand caps, truck lanes</div></div>';
+  h+='<div class="kg">';
+  h+='<div class="kt"><div class="kl">Queued Transfers</div><div class="kv vo">'+pen.length+'</div><div class="ks">'+S.app.size+' approved this session</div></div>';
+  h+='<div class="kt"><div class="kl">Total Savings</div><div class="kv vo">'+fmt$(totSav)+'</div><div class="ks">If all transfers approved</div></div>';
+  h+='<div class="kt"><div class="kl">Avg Feasibility Score</div><div class="kv vo">87</div><div class="ks">Out of 100 (solver output)</div></div>';
+  h+='<div class="kt"><div class="kl">Avg Cost/Unit</div><div class="kv">$3.70</div><div class="ks">Across all queued lanes</div></div>';
+  h+='</div>';
+  h+='<div class="tc">';
+  h+='<div>';
+  h+='<div class="card"><div class="ctitle">Feasibility Matrix <span class="aib">SOLVER</span></div>';
+  h+='<div style="font-size:10px;color:var(--tm);margin-bottom:7px">Constraint-by-constraint analysis. &#10003; = pass, &#8853; = marginal, &#215; = fail</div>';
+  h+='<div style="overflow-x:auto">';
+  h+='<table class="fmat"><thead><tr><th>Transfer</th><th>Demand Cap</th><th>Pallet Fit</th><th>Docks Avail</th><th>Trucks</th><th>Dispatch</th><th>Score</th></tr></thead><tbody>';
+  XF.forEach(function(x){
+    var c=XFCon[x.id];
+    var dOk=c.demCap>=x.u,pOk=c.palletFree>=c.palletNeed*20,dkOk=c.docksAvail>=1,trOk=c.trucks>=1,dpOk=c.dispOpen;
+    var sc=c.score;
+    var scC=sc>=90?'fcc':sc>=70?'fcw':'fcx';
+    h+='<tr'+(S.app.has(x.id)?' style="opacity:.45"':'')+'>';
+    h+='<td><span style="font-family:monospace;font-size:10px">'+x.id+'</span><br><span style="font-size:10px;color:var(--ts)">'+x.fn.replace(' DC','')+'→'+x.tn.replace(' DC','')+'</span></td>';
+    h+='<td><span class="'+(dOk?'fcc':'fcx')+'">'+(dOk?'&#10003;':'&#215;')+'</span><br><span style="font-size:9px;color:var(--tm)">'+x.u+'u&le;'+c.demCap+'</span></td>';
+    h+='<td><span class="'+(pOk?'fcc':'fcw')+'">'+(pOk?'&#10003;':'&#8853;')+'</span><br><span style="font-size:9px;color:var(--tm)">'+c.palletNeed+'pl/'+Math.floor(c.palletFree/20)+'free</span></td>';
+    h+='<td><span class="'+(dkOk?'fcc':'fcx')+'">'+(dkOk?'&#10003;':'&#215;')+'</span><br><span style="font-size:9px;color:var(--tm)">'+c.docksAvail+'/'+c.docksTotal+'</span></td>';
+    h+='<td><span class="'+(trOk?'fcc':'fcw')+'">'+(trOk?'&#10003;':'&#8853;')+'</span><br><span style="font-size:9px;color:var(--tm)">'+c.trucks+' avail</span></td>';
+    h+='<td><span class="'+(dpOk?'fcc':'fcx')+'">'+(dpOk?'&#10003;':'&#215;')+'</span><br><span style="font-size:9px;color:var(--tm)">'+(dpOk?'Open':'Closed')+'</span></td>';
+    h+='<td><span class="'+scC+'" style="font-size:14px">'+sc+'</span></td></tr>';
+  });
+  h+='</tbody></table></div>';
+  h+='</div>';
+  h+='<div class="card"><div class="ctitle">DC Operational Status</div>';
+  LO.forEach(function(l){
+    var ops=DCOps[l.id],cap=DCap[l.id];
+    var pu=Math.round(ops.palletUsed/ops.palletSlots*100);
+    var ou=cap?Math.round(cap.used/cap.cap*100):50;
+    var pCol=pu>88?'var(--cr)':pu>80?'var(--wa)':'var(--ok)';
+    h+='<div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid var(--bd)">';
+    h+='<div style="font-size:11px;font-weight:700;min-width:70px">'+ops.name.replace(' DC','')+'</div>';
+    h+='<div style="flex:1"><div style="display:flex;justify-content:space-between;font-size:9px;color:var(--tm);margin-bottom:2px"><span>Pallet</span><span style="font-weight:600;color:'+pCol+'">'+pu+'%</span></div><div style="height:4px;background:var(--bd);border-radius:2px"><div style="width:'+pu+'%;height:100%;background:'+pCol+';border-radius:2px"></div></div></div>';
+    h+='<div style="font-size:11px;text-align:center;min-width:48px"><span style="font-weight:600">'+ops.docksAvail+'</span><span style="color:var(--tm)">/'+ops.docks+'</span><div style="font-size:9px;color:var(--tm)">docks</div></div>';
+    h+='<div style="font-size:11px;text-align:center;min-width:42px"><span style="font-weight:600">'+ops.trucksAvail+'</span><span style="color:var(--tm)">/'+ops.trucks+'</span><div style="font-size:9px;color:var(--tm)">trucks</div></div>';
+    h+='</div>';
+  });
+  h+='</div>';
+  h+='<div class="card"><div class="ctitle">Cross-DC Stock vs Demand <span class="aib">SKU-003</span></div>';
+  h+='<div style="font-size:10px;color:var(--tm);margin-bottom:7px">Stock levels (bar) vs 30d demand (marker) for Wireless Earbuds X3</div>';
+  var skuST={'LOC-A':480,'LOC-B':82,'LOC-C':76,'LOC-D':125,'LOC-E':208,'LOC-F':95};
+  var skuDM={'LOC-A':45,'LOC-B':38,'LOC-C':280,'LOC-D':90,'LOC-E':75,'LOC-F':60};
+  LO.forEach(function(l){
+    var st=skuST[l.id]||0,dm=skuDM[l.id]||50;
+    var maxV=500;
+    var stPct=Math.min(100,Math.round(st/maxV*100));
+    var dmPct=Math.min(100,Math.round(dm/maxV*100));
+    var c=st<dm?'var(--cr)':st<dm*1.5?'var(--wa)':'var(--ok)';
+    h+='<div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">';
+    h+='<span style="font-size:11px;font-weight:700;min-width:28px">'+l.ab+'</span>';
+    h+='<div style="flex:1;position:relative;height:16px;background:var(--bd);border-radius:4px">';
+    h+='<div style="width:'+stPct+'%;height:100%;background:'+c+';border-radius:4px;opacity:.85"></div>';
+    h+='<div style="position:absolute;top:1px;bottom:1px;left:'+dmPct+'%;width:2px;background:var(--navy)"></div>';
+    h+='</div>';
+    h+='<span style="font-size:11px;min-width:30px;text-align:right;font-weight:600;color:'+c+'">'+st+'u</span>';
+    h+='</div>';
+  });
+  h+='<div style="display:flex;gap:12px;font-size:10px;margin-top:5px"><span>&#9644; <span style="color:var(--ok)">Stock</span></span><span>&#124; Demand</span></div>';
+  h+='</div>';
+  h+='</div>';
+  h+='<div>';
+  XF.forEach(function(x){
+    var c=XFCon[x.id];
+    var ap=S.app.has(x.id);
+    h+='<div class="card'+(ap?' ap':'')+'"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:9px">';
+    h+='<div><span style="font-family:monospace;font-size:12px;font-weight:700">'+x.id+'</span> <span class="bdg '+x.p+'">'+x.fn+' &#8594; '+x.tn+'</span></div>';
+    if(ap){h+='<span style="color:var(--ok);font-weight:600;font-size:12px">&#10003; Approved</span>';}
+    else{h+='<button class="btn bp" onclick="appX(\''+x.id+'\')">Approve Transfer</button>';}
+    h+='</div>';
+    h+='<div style="display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin-bottom:9px">';
+    [{l:'Units',v:x.u+'u'},{l:'Savings',v:'$'+x.sav,c:'var(--ok)'},{l:'ETA',v:x.eta},{l:'Cost/Unit',v:'$'+x.cpuEst},{l:'OT%',v:x.ontime+'%',c:x.ontime>=90?'var(--ok)':'var(--wa)'}].forEach(function(m){
+      h+='<div style="background:var(--surface);border-radius:5px;padding:6px 7px;text-align:center"><div style="font-size:12px;font-weight:700;color:'+(m.c||'inherit')+'">'+m.v+'</div><div style="font-size:9px;color:var(--tm)">'+m.l+'</div></div>';
+    });
+    h+='</div>';
+    h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;font-size:11px">';
+    h+='<div style="padding:5px 8px;background:var(--surface);border-radius:4px"><span style="color:var(--tm)">Demand cap: </span><span style="font-weight:600">'+c.demCap+'u</span></div>';
+    h+='<div style="padding:5px 8px;background:var(--surface);border-radius:4px"><span style="color:var(--tm)">Pallet need: </span><span style="font-weight:600">'+c.palletNeed+' pallets</span></div>';
+    h+='<div style="padding:5px 8px;background:var(--surface);border-radius:4px"><span style="color:var(--tm)">Dest DOS after: </span><span style="font-weight:600">'+c.destDOS+'d</span></div>';
+    h+='<div style="padding:5px 8px;background:var(--surface);border-radius:4px"><span style="color:var(--tm)">Solver score: </span><span style="font-weight:600;color:'+(c.score>=90?'var(--ok)':c.score>=70?'var(--wa)':'var(--cr)')+'">'+c.score+'/100</span></div>';
+    h+='</div>';
+    h+='</div>';
+  });
+  h+='<div class="ai"><div class="ail">&#9679; Optimization Engine — '+CFG.model+'</div>';
+  h+='TR-001 (CHI→DAL) scores 96/100 — all constraints satisfied, 2 trucks available, dispatch window open Mon/Wed/Fri. Prioritize immediately. TR-002 (ATL→PHL) scores 71 — only 1 dock available at Atlanta, pallet slots marginal (140 free). Feasible but tight; monitor. TR-003 and TR-004 both above 88 — approve alongside TR-001 for maximum savings.';
+  h+=mBadge()+'</div>';
+  h+='</div></div>';
+  return h;
+}function rRE(){
+  var sel=RE.find(function(r){return r.id===S.sR;})||RE[0];
+  var totEx=RE.reduce(function(a,r){return a+parseInt((r.ex||'0').replace(/[^0-9]/g,''));},0);
+  var recov=RE.filter(function(r){return r.penColor==='ok';}).reduce(function(a,r){return a+parseInt((r.penAmt||'0').replace(/[^0-9]/g,''));},0);
+  var pend=RE.filter(function(r){return r.penColor!=='ok';}).reduce(function(a,r){return a+parseInt((r.ex||'0').replace(/[^0-9]/g,''));},0);
+  var h='<div class="ph"><div class="pt2">Reconciliation + AI Flagging &nbsp;<span class="ldot"></span></div>';
+  h+='<div class="ps2">AI-driven 3-way match — PO vs GR vs Invoice &nbsp;&#183;&nbsp; Auto-penalty calculation &nbsp;&#183;&nbsp; Contract clause enforcement</div></div>';
+  h+='<div class="kg">';
+  h+='<div class="kt"><div class="kl">Total Exposure</div><div class="kv vc">'+fmt$(totEx)+'</div><div class="ks">'+RE.length+' open issues</div></div>';
+  h+='<div class="kt"><div class="kl">Chargebacks Sent</div><div class="kv vo">'+fmt$(recov)+'</div><div class="ks">3 issues resolved</div></div>';
+  h+='<div class="kt"><div class="kl">Pending Resolution</div><div class="kv vw">'+fmt$(pend)+'</div><div class="ks">4 issues open</div></div>';
+  h+='<div class="kt"><div class="kl">AI Flag Accuracy</div><div class="kv vo">99.1%</div><div class="ks">Zero false positives MTD</div></div>';
+  h+='</div>';
+  h+='<div class="tc">';
+  h+='<div>';
+  h+='<div class="card"><div class="ctitle">Flagged Issues <span class="aib">AI FLAGGED</span></div>';
+  h+='<table class="dt"><thead><tr><th>PO</th><th>Vendor</th><th>Issue Type</th><th>Exposure</th><th>Days Open</th><th>Due</th><th>Penalty Status</th></tr></thead><tbody>';
+  RE.forEach(function(r){
+    var sc=r.id===S.sR?'sel':'';
+    var dbc=r.days>=5?'bdg bc':r.days>=3?'bdg bw':'bdg bo';
+    h+='<tr class="'+sc+'" onclick="S.sR=\''+r.id+'\';nav(\'re\')"><td style="font-family:monospace;font-size:11px">'+r.id+'</td><td style="font-size:11px">'+r.vn+'</td><td><span class="bdg '+r.sv+'">'+r.ty+'</span></td><td style="font-weight:600;color:var(--cr)">'+r.ex+'</td><td><span class="'+dbc+'">'+r.days+'d</span></td><td style="font-size:11px">'+r.due+'</td><td><span class="pens '+r.penColor+'">'+r.penSt+'</span></td></tr>';
+  });
+  h+='</tbody></table></div>';
+  h+='<div class="card"><div class="ctitle">Dispute Aging & Escalation Risk</div>';
+  RE.forEach(function(r){
+    var pct=Math.min(100,Math.round(r.days/7*100));
+    var c=r.days>=5?'var(--cr)':r.days>=3?'var(--wa)':'var(--ok)';
+    var risk=r.days>=5?'High escalation risk':r.days>=3?'Monitor closely':'On track';
+    h+='<div style="margin-bottom:9px"><div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px">';
+    h+='<span style="font-weight:600">'+r.id+' <span style="font-weight:400;color:var(--ts)">'+r.vn+'</span></span>';
+    h+='<span style="color:'+c+';font-weight:600">'+r.days+'d open — due '+r.due+'</span></div>';
+    h+='<div style="height:6px;background:var(--bd);border-radius:3px"><div style="width:'+pct+'%;height:100%;background:'+c+';border-radius:3px"></div></div>';
+    h+='<div style="font-size:10px;color:var(--ts);margin-top:2px">'+risk+' &nbsp;&#183;&nbsp; '+r.ty+'</div></div>';
+  });
+  h+='</div>';
+  h+='<div class="card"><div class="ctitle">Exposure by Issue Type <span class="aib">$</span></div>';
+  h+='<div style="font-size:10px;color:var(--tm);margin-bottom:9px">Sorted by financial exposure. Color = resolution status.</div>';
+  var reByEx=RE.slice().sort(function(a,b){return parseInt(b.ex.replace(/[^0-9]/g,''))-parseInt(a.ex.replace(/[^0-9]/g,''));});
+  var maxEx=parseInt(reByEx[0].ex.replace(/[^0-9]/g,''));
+  reByEx.forEach(function(r){
+    var exV=parseInt(r.ex.replace(/[^0-9]/g,''));
+    var pct=Math.round(exV/maxEx*100);
+    var bc=r.penColor==='cr'?'var(--cr)':r.penColor==='wa'?'var(--wa)':'var(--ok)';
+    var stLabel=r.penColor==='cr'?'Blocked':r.penColor==='wa'?'Pending':'Resolved';
+    h+='<div style="margin-bottom:10px">';
+    h+='<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:3px">';
+    h+='<span style="font-size:11px;font-weight:600;color:var(--tp)">'+r.ty+'</span>';
+    h+='<span style="font-size:11px;font-weight:700;color:'+bc+'">'+r.ex+'</span>';
+    h+='</div>';
+    h+='<div style="position:relative;height:10px;background:var(--bd);border-radius:4px">';
+    h+='<div style="width:'+pct+'%;height:100%;background:'+bc+';border-radius:4px;opacity:.85"></div>';
+    h+='</div>';
+    h+='<div style="display:flex;justify-content:space-between;font-size:10px;color:var(--tm);margin-top:2px">';
+    h+='<span>'+r.id+' · '+r.vn+'</span>';
+    h+='<span style="font-weight:600;color:'+bc+'">'+stLabel+'</span>';
+    h+='</div>';
+    h+='</div>';
+  });
+  h+='<div style="display:flex;gap:12px;padding-top:7px;border-top:1px solid var(--bd);font-size:10px">';
+  h+='<span><span style="color:var(--cr)">&#9646;</span> Blocked</span>';
+  h+='<span><span style="color:var(--wa)">&#9646;</span> Pending</span>';
+  h+='<span><span style="color:var(--ok)">&#9646;</span> Resolved</span>';
+  h+='</div></div>';
+  h+='</div>';
+  h+='<div>';
+  h+='<div class="card"><div class="ctitle">3-Way Match Detail — '+sel.id+'</div>';
+  h+='<div class="dr"><div class="dc"><div class="dcl">Purchase Order</div><div class="db">'+sel.po+'</div></div>';
+  h+='<div class="dc"><div class="dcl">Goods Received (GRN)</div><div class="db">'+sel.gr+'</div></div>';
+  h+='<div class="dc"><div class="dcl">Vendor Invoice</div><div class="db mm">'+sel.iv+'</div></div></div>';
+  h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">';
+  [{l:'Vendor',v:sel.vn},{l:'Issue Type',v:sel.ty},{l:'Exposure',v:sel.ex,c:'var(--cr)'},{l:'Penalty Amount',v:sel.penAmt,c:'var(--ok)'}].forEach(function(x){
+    h+='<div style="background:var(--surface);border-radius:5px;padding:7px 9px"><div style="font-size:9px;color:var(--tm);font-weight:700;text-transform:uppercase;letter-spacing:.4px;margin-bottom:2px">'+x.l+'</div>';
+    h+='<div style="font-size:13px;font-weight:700;color:'+(x.c||'inherit')+'">'+x.v+'</div></div>';
+  });
+  h+='</div>';
+  h+='<div style="font-size:12px;color:var(--ts);line-height:1.6;padding:9px;background:var(--surface);border-radius:6px;border:1px solid var(--bd);margin-bottom:9px">'+sel.ds+'</div>';
+  h+='<div style="display:flex;align-items:center;gap:8px;padding:9px;background:rgba(95,227,207,.05);border-radius:6px;border:1px solid rgba(95,227,207,.2)">';
+  h+='<div style="font-size:11px;flex:1"><span style="font-weight:700;color:var(--teal)">Contract Clause:</span> '+sel.pen+'</div>';
+  h+='<span class="pens '+sel.penColor+'">'+sel.penSt+'</span>';
+  h+='</div>';
+  h+='</div>';
+  h+='<div class="card"><div class="ctitle">Vendor Scorecard — '+sel.vn+'</div>';
+  var vsData={
+    'Apex Electronics':{score:72,ot:88,acc:94,dup:2,chbk:3,ytdEx:'$10,850',trend:'down'},
+    'TechBridge Co.':{score:85,ot:91,acc:97,dup:0,chbk:1,ytdEx:'$828',trend:'stable'},
+    'Pacific Imports':{score:61,ot:79,acc:88,dup:3,chbk:4,ytdEx:'$7,290',trend:'down'},
+    'GlobalSource Ltd.':{score:68,ot:83,acc:91,dup:1,chbk:2,ytdEx:'$5,100',trend:'stable'},
+    'FastFreight LLC':{score:88,ot:93,acc:98,dup:0,chbk:0,ytdEx:'$186',trend:'up'},
+    'EastCoast Supply':{score:74,ot:87,acc:92,dup:1,chbk:1,ytdEx:'$5,500',trend:'stable'}
+  };
+  var vs=vsData[sel.vn]||{score:80,ot:90,acc:95,dup:0,chbk:0,ytdEx:'$0',trend:'stable'};
+  var sc=vs.score>=85?'var(--ok)':vs.score>=70?'var(--wa)':'var(--cr)';
+  h+='<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:9px">';
+  [{l:'Compliance Score',v:vs.score+'/100',c:sc},{l:'On-Time %',v:vs.ot+'%'},{l:'Accuracy %',v:vs.acc+'%'},
+   {l:'Duplicate Invoices',v:vs.dup+' YTD',c:vs.dup>1?'var(--cr)':'inherit'},{l:'Chargebacks',v:vs.chbk+' YTD',c:vs.chbk>2?'var(--wa)':'inherit'},{l:'YTD Exposure',v:vs.ytdEx,c:'var(--cr)'}
+  ].forEach(function(x){
+    h+='<div style="background:var(--surface);border-radius:5px;padding:7px;text-align:center"><div style="font-size:13px;font-weight:700;color:'+(x.c||'inherit')+'">'+x.v+'</div><div style="font-size:9px;color:var(--tm)">'+x.l+'</div></div>';
+  });
+  h+='</div>';
+  var trendColor=vs.trend==='up'?'var(--ok)':vs.trend==='down'?'var(--cr)':'var(--wa)';
+  var trendArrow=vs.trend==='up'?'&#9650;':vs.trend==='down'?'&#9660;':'&#9654;';
+  h+='<div style="display:flex;align-items:center;gap:7px;font-size:11px;padding:7px;background:var(--surface);border-radius:5px">';
+  h+='<span>Score trend:</span><span style="font-weight:700;color:'+trendColor+'">'+trendArrow+' '+vs.trend.charAt(0).toUpperCase()+vs.trend.slice(1)+'</span>';
+  h+='<span style="color:var(--tm);margin-left:auto">Last 90 days</span></div>';
+  h+='</div>';
+  h+='<div class="ai"><div class="ail">&#9679; AI Analysis — '+CFG.model+'</div>';
+  h+='<strong>'+sel.id+' ('+sel.ty+'):</strong> '+sel.ds+' AI recommends: ';
+  if(sel.penColor==='cr'){h+='Immediate escalation — payment blocked pending physical audit. Contact vendor within 24h.';}
+  else if(sel.penColor==='wa'){h+='Penalty applied per contract clause. Vendor communication sent. Monitor for resolution by '+sel.due+'.';}
+  else{h+='Chargeback processed. Issue logged in vendor scorecard. Resolution confirmed.';}
+  h+=mBadge()+'</div>';
+  h+='</div></div>';
+  return h;
+}function rSA(){
+  var sel=SA.find(function(s){return s.id===S.sSA;})||SA[0];
+  var abs=salAbs(sel);
+  var totAbs=abs.filter(function(a){return a.feasible;}).reduce(function(t,a){return t+a.absorb;},0);
+  var remLiq=Math.max(0,sel.u-totAbs);
+  var totRec=SA.reduce(function(a,s){return a+s.rec;},0);
+  var h='<div class="ph"><div class="pt2">Salvage / Liquidation AI &nbsp;<span class="ldot"></span></div>';
+  h+='<div class="ps2">2-Phase: DC absorption first, then channel liquidation &nbsp;&#183;&nbsp; Constraint-driven optimization</div></div>';
+  h+='<div class="kg">';
+  h+='<div class="kt"><div class="kl">Total Recovery Value</div><div class="kv vo">'+fmt$(totRec)+'</div><div class="ks">'+SA.length+' SKUs candidates</div></div>';
+  h+='<div class="kt"><div class="kl">Write-Down Risk</div><div class="kv vc">3</div><div class="ks">SKUs near/past 200d threshold</div></div>';
+  h+='<div class="kt"><div class="kl">DC Absorption</div><div class="kv vo">'+totAbs+'u</div><div class="ks">'+sel.id+' — feasible DCs</div></div>';
+  h+='<div class="kt"><div class="kl">Remaining to Liquidate</div><div class="kv vw">'+remLiq+'u</div><div class="ks">After phase 1 absorption</div></div>';
+  h+='</div>';
+  h+='<div class="tc">';
+  h+='<div>';
+  h+='<div class="card"><div class="ctitle">Aged SKU Queue <span class="aib">'+SA.length+' CANDIDATES</span></div>';
+  h+='<table class="dt"><thead><tr><th>SKU</th><th>Product</th><th>Age</th><th>Units</th><th>COGS</th><th>Recovery</th><th>Risk</th></tr></thead><tbody>';
+  SA.forEach(function(s){
+    var sc=s.id===S.sSA?'sel':'';
+    var rc=s.ageRisk==='critical'?'bdg bc':s.ageRisk==='high'?'bdg bw':s.ageRisk==='medium'?'bdg bw':'bdg bo';
+    h+='<tr class="'+sc+'" onclick="S.sSA=\''+s.id+'\';nav(\'sa\')"><td style="font-family:monospace;font-size:11px">'+s.id+'</td><td>'+s.n+'</td><td style="font-weight:600;color:'+(s.dy>200?'var(--cr)':s.dy>180?'var(--wa)':'inherit')+'">'+s.dy+'d</td><td>'+s.u+'u</td><td>$'+s.cogs+'</td><td style="color:var(--ok);font-weight:600">$'+s.rec.toLocaleString()+'</td><td><span class="'+rc+'">'+s.ageRisk+'</span></td></tr>';
+  });
+  h+='</tbody></table></div>';
+  h+='<div class="card"><div class="ctitle">Liquidation Constraints <span class="aib">ACTIVE</span></div>';
+  h+='<table class="dt"><thead><tr><th>Channel</th><th>Min Lot</th><th>Approval</th><th>Reserve Floor</th><th>Avg Recovery</th></tr></thead><tbody>';
+  var chInfo=[['B-Stock',50,3,'25% COGS',62],['eBay',1,1,'15% COGS',71],['Jobber',100,5,'20% COGS',48],['Amazon Liq.',200,10,'20% COGS',55]];
+  chInfo.forEach(function(c){
+    h+='<tr><td style="font-weight:600">'+c[0]+'</td><td>'+c[1]+'u</td><td>'+c[2]+'d</td><td>'+c[3]+'</td><td style="color:var(--ok);font-weight:600">'+c[4]+'%</td></tr>';
+  });
+  h+='</tbody></table>';
+  h+='<div style="margin-top:11px;border-top:1px solid var(--bd);padding-top:10px">';
+  h+='<div style="font-size:9px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--wa);margin-bottom:8px">Write-Down Countdown (200-day threshold)</div>';
+  var wdSKUs=SA.filter(function(s){return s.dy>=142;}).sort(function(a,b){return b.dy-a.dy;});
+  wdSKUs.forEach(function(s){
+    var rem=SCon.writeDownDay-s.dy;
+    var c=rem<=0?'var(--cr)':rem<=15?'var(--wa)':'var(--ts)';
+    var icon=rem<=0?'&#9888;':rem<=15?'&#9888;':'&#9679;';
+    var label=rem<=0?'PAST threshold — immediate action':''+rem+'d remaining';
+    h+='<div class="wdr"><span class="wdn">'+icon+' '+s.id+' '+s.n.substring(0,22)+'</span>';
+    h+='<span style="display:flex;gap:8px;align-items:center"><span style="color:var(--tm);font-size:10px">'+s.dy+'d</span>';
+    h+='<span style="font-weight:700;font-size:11px;color:'+c+'">'+label+'</span></span></div>';
+  });
+  h+='</div>';
+  h+='<div style="margin-top:9px;padding:7px 9px;background:rgba(239,68,68,.06);border-radius:5px;border:1px solid rgba(239,68,68,.2);font-size:11px">';
+  h+='<strong style="color:var(--cr)">Reserve Price Floor:</strong> No sale below 25% of COGS. ';
+  h+='SKU-026: min $'+Math.round(90*0.25)+'/unit &nbsp;&#183;&nbsp; SKU-091: min $'+Math.round(189*0.25)+'/unit';
+  h+='</div></div>';
+  h+='<div class="card"><div class="ctitle">Channel Recovery Mix</div>';
+  var chCols=['#5fe3cf','#f59e0b','#10b981','#8b5cf6'];
+  h+=dn([62,71,48,55],chCols,52,16);
+  h+='<div style="margin-top:8px">';
+  ['B-Stock (62%)','eBay (71%)','Jobber (48%)','Amazon Liq. (55%)'].forEach(function(ch,i){
+    h+='<div style="display:flex;align-items:center;gap:6px;font-size:11px;margin-bottom:4px"><div style="width:8px;height:8px;border-radius:50%;background:'+chCols[i]+';flex-shrink:0"></div><span>'+ch+'</span></div>';
+  });
+  h+='</div></div>';
+  h+='</div>';
+  h+='<div>';
+  h+='<div class="card"><div class="ctitle">Age Distribution — All Candidates</div>';
+  h+='<div style="font-size:10px;color:var(--tm);margin-bottom:8px">Days aged vs 200d write-down threshold (vertical bar)</div>';
+  h+=ageBars(SA);
+  h+='</div>';
+  h+='<div class="card"><div class="ctitle">Phase 1 — DC Absorption Analysis <span class="aib">'+sel.id+'</span></div>';
+  h+='<div class="optbox"><span class="ot2">Solver:</span> <span class="ov2">SciPy MILP</span> &nbsp;&#183;&nbsp; <span class="ot2">Objective:</span> <span class="ov2">Maximize internal absorption</span><br>';
+  h+='<span class="ot2">SKU:</span> <span class="ov2">'+sel.id+' '+sel.n+'</span> &nbsp;&#183;&nbsp; <span class="ot2">Total units:</span> <span class="ov2">'+sel.u+'u</span><br>';
+  h+='<span class="ot2">DC feasible:</span> <span class="'+(totAbs>0?'ook':'ow2')+'">'+totAbs+'u absorbable</span> &nbsp;&#183;&nbsp; <span class="ot2">Remaining:</span> <span class="ov2">'+remLiq+'u → liquidation</span></div>';
+  h+='<table class="abt"><thead><tr><th>DC</th><th>30d Demand</th><th>Current Stock</th><th>Gap</th><th>Absorb</th><th>Pallets</th><th>Docks</th><th>Feasible</th></tr></thead><tbody>';
+  abs.forEach(function(a){
+    var pals=Math.ceil(a.absorb/20);
+    h+='<tr><td style="font-weight:600">'+a.ab+'</td><td>'+a.demand+'u</td><td>'+a.stock+'u</td>';
+    h+='<td style="font-weight:600;color:'+(a.gap>0?'var(--ok)':'var(--tm)')+'">'+a.gap+'u</td>';
+    h+='<td style="font-weight:700">'+a.absorb+'u';
+    var gw=a.demand>0?Math.round(a.absorb/a.demand*100):0;
+    h+='<span class="gbar"><span class="gbarf" style="width:'+gw+'%;background:'+(a.feasible?'var(--ok)':'var(--tm)')+'"></span></span></td>';
+    h+='<td>'+pals+'</td>';
+    h+='<td><span class="'+(a.dockOk?'fcc':'fcx')+'">'+(a.dockOk?'&#10003;':'&#215;')+'</span></td>';
+    h+='<td><span style="font-weight:700;color:'+(a.feasible?'var(--ok)':'var(--cr)')+'">'+( a.feasible?'YES':'NO')+'</span></td></tr>';
+  });
+  h+='</tbody></table></div>';
+  h+='<div class="card"><div class="ctitle">Phase 2 — Liquidation Channel Match</div>';
+  if(remLiq<=0){
+    h+='<div style="color:var(--ok);font-weight:600;padding:10px;text-align:center;background:rgba(16,185,129,.06);border-radius:6px">&#10003; All '+sel.u+' units absorbed by DCs — no liquidation needed</div>';
+  } else {
+    h+='<div class="optbox"><span class="ot2">Remaining to liquidate:</span> <span class="ov2">'+remLiq+'u</span><br>';
+    h+='<span class="ot2">Reserve floor:</span> <span class="ov2">$'+Math.round(sel.cogs*0.25)+'/unit ('+SCon.reservePct+'% COGS)</span><br>';
+    h+='<span class="ot2">Eligible channels:</span> <span class="ov2">'+sel.ch.length+' channels</span></div>';
+    var allocLeft=remLiq;
+    sel.ch.forEach(function(ch){
+      var minL=SCon.chMin[ch]||1,app=SCon.chApp[ch]||3,rec=(SCon.chRec[ch]||50)/100;
+      var alloc=Math.min(allocLeft,Math.max(minL,Math.round(remLiq/sel.ch.length)));
+      allocLeft=Math.max(0,allocLeft-alloc);
+      var recAmt=Math.round(alloc*sel.cogs*rec);
+      var eligible=alloc>=minL;
+      h+='<div style="display:flex;align-items:center;gap:9px;padding:7px 0;border-bottom:1px solid var(--bd)">';
+      h+='<span style="font-size:12px;font-weight:600;min-width:90px">'+ch+'</span>';
+      h+='<div style="flex:1;font-size:11px"><div style="color:var(--ts)">'+alloc+'u allocated &nbsp;&#183;&nbsp; Min '+minL+'u &nbsp;&#183;&nbsp; '+app+'d approval</div></div>';
+      h+='<span style="font-weight:700;color:var(--ok);font-size:12px">'+fmt$(recAmt)+'</span>';
+      h+='<span style="font-size:11px;color:'+(eligible?'var(--ok)':'var(--cr)')+'">'+(eligible?'&#10003; OK':'&#215; Below min')+'</span>';
+      h+='</div>';
+    });
+  }
+  h+='</div>';
+  h+='<div class="ai"><div class="ail">&#9679; AI Analysis — '+CFG.model+'</div>';
+  h+='<strong>'+sel.id+' '+sel.n+'</strong> ('+sel.dy+'d aged, '+sel.u+'u at origin '+sel.lN+'): ';
+  if(totAbs>0){h+='Phase 1 identifies '+totAbs+'u of internal absorption capacity across feasible DCs. ';}
+  if(remLiq>0){h+='Remaining '+remLiq+'u routed to liquidation channels. ';}
+  h+='Recommended channel priority: '+sel.ch.join(' → ')+'. Reserve floor $'+Math.round(sel.cogs*0.25)+'/unit enforced.';
+  if(sel.dy>SCon.writeDownDay){h+=' <strong style="color:var(--cr)">ALERT: Past write-down threshold — expedite immediately.</strong>';}
+  h+=mBadge()+'</div>';
+  h+='</div></div>';
+  return h;
+}function rRP(){
+  var sel=RP.find(function(p){return p.id===S.sP;})||RP[0];
+  var r=rng(sel.id.charCodeAt(4)*13+77);
+  var pts=Array.from({length:12},function(){return Math.round(sel.fc30/30*(0.75+r()*0.5));});
+  var h='<div class="ph"><div class="pt2">Replenishment & Planning &nbsp;<span class="ldot"></span></div>';
+  h+='<div class="ps2">AI demand forecasting &nbsp;&#183;&nbsp; EOQ optimization &nbsp;&#183;&nbsp; Service level management</div></div>';
+  var crit=RP.filter(function(p){return p.pr==='critical';}).length;
+  var hi=RP.filter(function(p){return p.pr==='high';}).length;
+  var exc=RP.filter(function(p){return p.pr==='excess';}).length;
+  var totOrderVal=RP.filter(function(p){return p.sug>0;}).reduce(function(a,p){return a+p.sug*p.cost;},0);
+  h+='<div class="kg">';
+  h+='<div class="kt"><div class="kl">Critical Reorders</div><div class="kv vc">'+crit+'</div><div class="ks">Reorder NOW — OOS risk</div></div>';
+  h+='<div class="kt"><div class="kl">High Priority</div><div class="kv vw">'+hi+'</div><div class="ks">Reorder within 7 days</div></div>';
+  h+='<div class="kt"><div class="kl">Total Order Value</div><div class="kv vo">'+fmt$(totOrderVal)+'</div><div class="ks">If all triggered</div></div>';
+  h+='<div class="kt"><div class="kl">Excess SKUs</div><div class="kv">'+exc+'</div><div class="ks">Overstocked — hold</div></div>';
+  h+='</div>';
+  h+='<div class="tc">';
+  h+='<div>';
+  h+='<div class="card"><div class="ctitle">SKU Replenishment Overview</div>';
+  h+='<table class="dt"><thead><tr><th>SKU</th><th>Product</th><th>OH</th><th>ROP</th><th>DOS</th><th>EOQ</th><th>Sug. Qty</th><th>Priority</th></tr></thead><tbody>';
+  RP.forEach(function(p){
+    var sc=p.id===S.sP?'sel':'';
+    var pc=p.pr==='critical'?'bdg bc':p.pr==='high'?'bdg bw':p.pr==='excess'?'bdg bo':'bdg bo';
+    h+='<tr class="'+sc+'" onclick="S.sP=\''+p.id+'\';nav(\'rp\')"><td style="font-family:monospace;font-size:11px">'+p.id+'</td><td>'+p.n+'</td><td style="font-weight:600;color:'+(p.oh<p.rop?'var(--cr)':'inherit')+'">'+p.oh+'</td><td>'+p.rop+'</td><td style="color:'+(p.dos<14?'var(--cr)':p.dos<30?'var(--wa)':'inherit')+'">'+p.dos+'d</td><td>'+p.eoq+'</td><td style="font-weight:600;color:'+(p.sug>0?'var(--ok)':'var(--tm)')+'">'+( p.sug>0?p.sug:'Hold')+'</td><td><span class="'+pc+'">'+p.pr+'</span></td></tr>';
+  });
+  h+='</tbody></table></div>';
+  h+='<div class="card"><div class="ctitle">Inventory Health — All SKUs</div>';
+  h+='<div style="font-size:10px;color:var(--tm);margin-bottom:8px">OH vs ROP. Below vertical bar = reorder zone.</div>';
+  h+=ivBars(RP.map(function(p){return{id:p.id,oh:p.oh,rop:p.rop,n:p.n};}));
+  h+='</div>';
+  h+='<div class="card"><div class="ctitle">Demand Forecast — '+sel.id+'</div>';
+  h+=ply(pts,340,70,'var(--teal)','var(--teal)');
+  h+='<div style="display:flex;justify-content:space-between;font-size:10px;color:var(--tm);margin-top:3px"><span>Week 1</span><span>Week 6</span><span>Week 12</span></div>';
+  h+='<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:9px">';
+  [{l:'30d Forecast',v:sel.fc30+'u'},{l:'60d Forecast',v:sel.fc60+'u'},{l:'Avg/Week',v:Math.round(sel.fc30/4.3)+'u'}].forEach(function(x){
+    h+='<div style="background:var(--surface);border-radius:5px;padding:7px;text-align:center"><div style="font-size:12px;font-weight:700">'+x.v+'</div><div style="font-size:9px;color:var(--tm)">'+x.l+'</div></div>';
+  });
+  h+='</div></div>';
+  h+='</div>';
+  h+='<div>';
+  h+='<div class="card"><div class="ctitle">'+sel.id+' — Detail</div>';
+  h+='<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:11px">';
+  [{l:'On-Hand',v:sel.oh+'u',c:sel.oh<sel.rop?'var(--cr)':'inherit'},{l:'ROP',v:sel.rop+'u'},{l:'Days of Supply',v:sel.dos+'d',c:sel.dos<14?'var(--cr)':sel.dos<30?'var(--wa)':'inherit'},
+   {l:'EOQ',v:sel.eoq+'u'},{l:'Lead Time',v:sel.lt+'d'},{l:'Service Level',v:sel.sl+'%'},
+   {l:'Unit Cost',v:'$'+sel.cost},{l:'30d Forecast',v:sel.fc30+'u'},{l:'Priority',v:sel.pr}
+  ].forEach(function(x){
+    h+='<div style="background:var(--surface);border-radius:6px;padding:8px 10px"><div style="font-size:9px;color:var(--tm);font-weight:700;text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px">'+x.l+'</div>';
+    h+='<div style="font-size:13px;font-weight:700;color:'+(x.c||'var(--tp)')+'">'+x.v+'</div></div>';
+  });
+  h+='</div>';
+  h+='<div class="ctitle">Service Level Optimizer</div>';
+  h+='<div class="sw"><label>Target SL</label><input type="range" min="85" max="99.9" step=".5" value="'+S.sl+'" oninput="S.sl=+this.value;document.getElementById(\'slv\').textContent=S.sl+\'%\';document.getElementById(\'slcalc\').innerHTML=slCalc(S.sl,'+JSON.stringify(sel)+')" /><span class="svl" id="slv">'+S.sl+'%</span></div>';
+  h+='<div id="slcalc">'+slCalc(S.sl,sel)+'</div>';
+  h+='</div>';
+  h+='<div class="card"><div class="ctitle">Replenishment Schedule</div>';
+  var sched=[
+    {sku:'SKU-001',dos:17,sug:400,val:fmt$(400*4.65),eta:'Nov 13'},
+    {sku:'SKU-005',dos:10,sug:500,val:fmt$(500*34.50),eta:'Nov 20'},
+    {sku:'SKU-012',dos:11,sug:320,val:fmt$(320*28.90),eta:'Nov 13'},
+    {sku:'SKU-022',dos:9,sug:120,val:fmt$(120*89),eta:'Nov 27'}];
+  h+='<table class="dt"><thead><tr><th>SKU</th><th>DOS</th><th>Sug. Qty</th><th>Order Value</th><th>Need By</th><th>Status</th></tr></thead><tbody>';
+  sched.forEach(function(s){
+    h+='<tr><td style="font-family:monospace;font-size:11px">'+s.sku+'</td><td style="color:'+(s.dos<12?'var(--cr)':'var(--wa)')+'">'+s.dos+'d</td><td style="font-weight:600">'+s.sug+'u</td><td>'+s.val+'</td><td style="font-size:11px">'+s.eta+'</td><td><span class="bdg bc">PO Required</span></td></tr>';
+  });
+  h+='</tbody></table></div>';
+  h+='<div class="ai"><div class="ail">&#9679; AI Analysis — '+CFG.model+'</div>';
+  h+='<strong>'+sel.id+'</strong>: DOS '+sel.dos+'d at current demand. EOQ '+sel.eoq+'u minimizes total cost. ';
+  if(sel.sug>0){h+='Trigger PO for '+sel.sug+'u immediately — lead time '+sel.lt+'d leaves only '+(sel.dos-sel.lt)+'d buffer.';}
+  else{h+='Adequate stock — hold. Review in 14 days.';}
+  h+=mBadge()+'</div>';
+  h+='</div></div>';
+  return h;
+}
+function slCalc(sl,p){
+  var zMap={'85':1.04,'87.5':1.15,'90':1.28,'92.5':1.44,'95':1.65,'97.5':1.96,'99':2.33,'99.9':3.09};
+  var z=zMap[sl]||1.65;
+  var ss=Math.round(z*Math.sqrt(p.lt)*(p.fc30/30)*0.3);
+  var inv=p.oh+p.eoq/2+ss;
+  var hldc=inv*p.cost*0.25/365;
+  return '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin-top:5px">'+
+    ['Safety Stock: '+ss+'u','Reorder Qty: '+p.eoq+'u','Avg Inventory: '+Math.round(inv)+'u',
+     'Holding Cost: '+fmt$(Math.round(hldc))+'/yr','Order Value: '+fmt$(p.eoq*p.cost),'Stockout Risk: '+(100-sl)+'%'].map(function(v,i){
+    return '<div style="background:var(--surface);border-radius:5px;padding:6px 8px;text-align:center"><div style="font-size:11px;font-weight:700">'+v.split(':')[1].trim()+'</div><div style="font-size:9px;color:var(--tm)">'+v.split(':')[0]+'</div></div>';
+  }).join('')+'</div>';
+}function rDO(){
+  var sel=DO.find(function(d){return d.id===S.sD;})||DO[S.sD]||DO[0];
+  var exFields={
+    'DOC-001':[['Invoice #','FRT-2847334'],['Shipper','FedEx Freight'],['Origin','Chicago DC'],['Destination','Dallas DC'],['Weight','4,820 lbs'],['Pallets','12 PLT'],['Freight Class','85'],['Total Charges','$12,440.00'],['Fuel Surcharge','$1,118.00'],['Delivery Date','Nov 05 2026'],['PRO #','391-7284-6'],['BOL #','BOL-FX-9823']],
+    'DOC-002':[['PO Number','PO-089'],['Vendor','Apex Electronics'],['PO Date','Nov 02 2026'],['Delivery Site','Dallas DC'],['SKU','SKU-003'],['Description','Wireless Earbuds X3'],['Qty Ordered','300 units'],['Unit Price','$4.20'],['Extended','$1,260.00'],['Payment Terms','Net 30'],['Buyer','J. Martinez'],['Approval','Pending']],
+    'DOC-003':[['BOL #','BOL-2847'],['Shipper','GlobalSource Ltd.'],['Consignee','Chicago DC'],['Origin','Guangzhou, China'],['Carrier','UPS Supply Chain'],['Shipment Date','Nov 03 2026'],['Weight','8,440 lbs'],['Pieces','24'],['Commodity','General Merchandise'],['Freight Terms','Prepaid'],['PO Reference','PO-098'],['Seal #','SL-442891']],
+    'DOC-004':[['GRN #','GRN-5521'],['PO #','PO-091'],['Vendor','TechBridge Co.'],['DC','Atlanta DC'],['Receipt Date','Nov 03 2026'],['Expected Qty','500 units'],['Received Qty','482 units'],['Variance','-18 units (3.6%)'],['Receiver','K. Thompson'],['Condition','Good'],['Discrepancy','Short shipment'],['Disposition','Accepted with note']],
+    'DOC-005':[['Invoice #','INV-7843 (RESUBMIT)'],['Vendor','Pacific Imports'],['Invoice Date','Nov 01 2026'],['PO Reference','PO-095'],['Amount','$1,890.00'],['Payment Status','BLOCKED'],['Reason','Duplicate — paid Oct 22'],['Original Payment','Ref: PAY-6629'],['AP Flag','DUPLICATE DETECTED'],['Action Required','Void + notify vendor'],['Fine Applied','$500'],['AI Match Confidence','99.7%']]
+  };
+  var prevs={
+    'DOC-001':['<span class="dpl">FREIGHT INVOICE</span><span class="dps">FedEx Freight · LTL Division</span>','<span class="dpl">PRO Number:</span><span class="dpv">391-7284-6</span>','<span class="dpl">BOL Number:</span><span class="dpv">BOL-FX-9823</span>','<span class="dpl">Shipper:</span><span class="dpv">Chicago DC · Infyslate</span>','<span class="dpl">Destination:</span><span class="dpv">Dallas DC · 4820 lbs</span>','<span class="dpl">Freight Charges:</span><span class="dpv">$11,322.00</span>','<span class="dpl">Fuel Surcharge:</span><span class="dpv">$1,118.00</span>','<span class="dpt">TOTAL DUE: $12,440.00</span>','<span class="dps">Terms: Net 15 · Due Nov 20 2026</span>'],
+    'DOC-002':['<span class="dpl">PURCHASE ORDER</span><span class="dps">Infyslate Inc. · Procurement</span>','<span class="dpl">PO Number:</span><span class="dpv">PO-089</span>','<span class="dpl">Vendor:</span><span class="dpv">Apex Electronics</span>','<span class="dpl">Item:</span><span class="dpv">SKU-003 Wireless Earbuds X3</span>','<span class="dpl">Qty:</span><span class="dpv">300 units @ $4.20/unit</span>','<span class="dpt">INVOICE AMOUNT: $4.65/unit</span>','<span class="dph">VARIANCE DETECTED: +$0.45/unit</span>','<span class="dps">AI Flag: §12.4 chargeback eligible</span>'],
+    'DOC-003':['<span class="dpl">BILL OF LADING</span><span class="dps">UPS Supply Chain · Int\'l</span>','<span class="dpl">BOL #:</span><span class="dpv">BOL-2847</span>','<span class="dpl">Shipper:</span><span class="dpv">GlobalSource Ltd.</span>','<span class="dpl">Consignee:</span><span class="dpv">Chicago DC</span>','<span class="dpl">PO Reference:</span><span class="dpv">PO-098</span>','<span class="dpt">GRN: NOT RECEIVED</span>','<span class="dph">ALERT: Payment blocked §9.3</span>'],
+    'DOC-004':['<span class="dpl">GOODS RECEIPT NOTE</span><span class="dps">Atlanta DC · WMS</span>','<span class="dpl">GRN #:</span><span class="dpv">GRN-5521</span>','<span class="dpl">Expected:</span><span class="dpv">500 units</span>','<span class="dpl">Received:</span><span class="dpv">482 units</span>','<span class="dpt">VARIANCE: -18 units (3.6%)</span>','<span class="dph">DISCREPANCY FLAGGED §8.1</span>','<span class="dps">Debit note: $828 processing</span>'],
+    'DOC-005':['<span class="dpl">VENDOR INVOICE</span><span class="dps">Pacific Imports · AR Dept</span>','<span class="dpl">Invoice #:</span><span class="dpv">INV-7843 (RESUBMIT)</span>','<span class="dpl">Amount:</span><span class="dpv">$1,890.00</span>','<span class="dpt">STATUS: PAYMENT BLOCKED</span>','<span class="dph">DUPLICATE — Paid Oct 22 (PAY-6629)</span>','<span class="dph">FINE APPLIED: $500 per §15.2</span>','<span class="dps">AI Match Confidence: 99.7%</span>']
+  };
+  var h='<div class="ph"><div class="pt2">Document AI &nbsp;<span class="ldot"></span></div>';
+  h+='<div class="ps2">AI-powered document parsing — invoices, POs, BOLs, GRNs &nbsp;&#183;&nbsp; Auto 3-way match &nbsp;&#183;&nbsp; Contract clause enforcement</div></div>';
+  h+='<div class="kg">';
+  h+='<div class="kt"><div class="kl">Documents Today</div><div class="kv vo">47</div><div class="ks">5 in queue</div></div>';
+  h+='<div class="kt"><div class="kl">Extracted</div><div class="kv vo">44</div><div class="ks">93.6% auto-processed</div></div>';
+  h+='<div class="kt"><div class="kl">Flagged for Review</div><div class="kv vc">3</div><div class="ks">AI confidence < 95%</div></div>';
+  h+='<div class="kt"><div class="kl">Avg Process Time</div><div class="kv vo">2.3s</div><div class="ks">Per document</div></div>';
+  h+='</div>';
+  h+='<div class="tc">';
+  h+='<div>';
+  h+='<div class="card"><div class="ctitle">Document Queue <span class="aib">LIVE</span></div>';
+  DO.forEach(function(d,i){
+    var stc=d.st==='extracted'?'dst ex':d.st==='flagged'?'dst rv':'dst rv';
+    h+='<div class="di'+(i===S.sD?' sel':'')+'" onclick="S.sD='+i+';nav(\'do\')">';
+    h+='<div style="font-size:18px;flex-shrink:0">'+(d.ty==='Freight Invoice'?'&#128666;':d.ty==='Purchase Order'?'&#128203;':d.ty==='Bill of Lading'?'&#128250;':d.ty==='Goods Receipt'?'&#9989;':'&#9888;')+'</div>';
+    h+='<div style="flex:1"><div style="font-size:12px;font-weight:600">'+d.nm+'</div>';
+    h+='<div style="font-size:11px;color:var(--ts)">'+d.ty+' &nbsp;&#183;&nbsp; '+d.vn+' &nbsp;&#183;&nbsp; '+d.ts+'</div>';
+    h+='<div style="font-size:11px;margin-top:2px"><span style="color:var(--ok)">'+Math.round(d.sc*100)+'% confidence</span>'+(d.amt?' &nbsp;&#183;&nbsp; '+d.amt:'')+'</div>';
+    h+='</div><span class="'+stc+'">'+d.st+'</span></div>';
+  });
+  h+='</div>';
+  h+='<div class="card"><div class="ctitle">Pipeline Stage <span class="aib">LIVE</span></div>';
+  var stages=['Ingestion','OCR Extract','Field Parse','Validation','3-Way Match','Clause Check','ERP Post'];
+  h+='<div class="pip">';
+  stages.forEach(function(s,i){
+    var done=i<4||(sel.st==='extracted'&&i<6);
+    h+='<span class="pst '+(done?'d':'a')+'">'+s+'</span>';
+    if(i<stages.length-1)h+='<span class="par">&#8250;</span>';
+  });
+  h+='</div>';
+  h+='<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin-bottom:9px">';
+  [{l:'Pages',v:sel.pg},{l:'Confidence',v:Math.round(sel.sc*100)+'%'},{l:'Process Time',v:'2.3s'},{l:'Doc Type',v:sel.ty},{l:'Vendor',v:sel.vn},{l:'Date',v:sel.date}].forEach(function(x){
+    h+='<div style="background:var(--surface);border-radius:5px;padding:7px;text-align:center"><div style="font-size:11px;font-weight:700">'+x.v+'</div><div style="font-size:9px;color:var(--tm)">'+x.l+'</div></div>';
+  });
+  h+='</div>';
+  h+='<div class="dprev">';
+  var pv=prevs[sel.id]||prevs['DOC-001'];
+  pv.forEach(function(line){h+='<div>'+line+'</div>';});
+  h+='</div></div>';
+  h+='</div>';
+  h+='<div>';
+  h+='<div class="card"><div class="ctitle">Extracted Fields</div>';
+  var flds=exFields[sel.id]||exFields['DOC-001'];
+  flds.forEach(function(f){
+    h+='<div class="mr"><span class="mn">'+f[0]+'</span><span class="mv">'+f[1]+'</span></div>';
+  });
+  h+='</div>';
+  h+='<div class="card"><div class="ctitle">Processing Stats — Today</div>';
+  var r2=rng(99);
+  var hrPts=Array.from({length:12},function(){return Math.round(3+r2()*6);});
+  h+=ply(hrPts,340,60,'var(--teal)','var(--teal)');
+  h+='<div style="display:flex;justify-content:space-between;font-size:10px;color:var(--tm);margin-top:3px"><span>8am</span><span>12pm</span><span>4pm</span></div>';
+  h+='<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin-top:9px">';
+  [{l:'Peak Volume',v:'9 docs/hr'},{l:'Avg Confidence',v:'96.4%'},{l:'Auto-Posted',v:'38 docs'}].forEach(function(x){
+    h+='<div style="background:var(--surface);border-radius:5px;padding:7px;text-align:center"><div style="font-size:11px;font-weight:700">'+x.v+'</div><div style="font-size:9px;color:var(--tm)">'+x.l+'</div></div>';
+  });
+  h+='</div></div>';
+  h+='<div class="ai"><div class="ail">&#9679; AI Analysis — '+CFG.model+'</div>';
+  if(sel.st==='flagged'){h+='<strong style="color:var(--cr)">FLAG:</strong> '+sel.nm+' shows anomalies requiring review. Confidence '+Math.round(sel.sc*100)+'% — recommend manual verification before ERP posting.';}
+  else{h+='<strong>'+sel.nm+'</strong> processed at '+Math.round(sel.sc*100)+'% confidence. All fields extracted and validated against PO/GRN records.';}
+  h+=mBadge()+'</div>';
+  h+='</div></div>';
+  return h;
+}function rTP(){
+  var r=rng(77);
+  var wkPts=CA.map(function(c){return Array.from({length:8},function(){return Math.round(c.ot*(0.9+r()*0.2));});});
+  var totVol=CA.reduce(function(a,c){return a+c.vol;},0);
+  var avgOT=(CA.reduce(function(a,c){return a+c.ot*c.vol;},0)/totVol).toFixed(1);
+  var totClaims=CA.reduce(function(a,c){return a+Math.round(c.vol*c.claims/100*280);},0);
+  var h='<div class="ph"><div class="pt2">3PL Control &nbsp;<span class="ldot"></span></div>';
+  h+='<div class="ps2">Carrier performance monitoring &nbsp;&#183;&nbsp; Lane-level analytics &nbsp;&#183;&nbsp; Claims management</div></div>';
+  h+='<div class="kg">';
+  h+='<div class="kt"><div class="kl">Avg On-Time %</div><div class="kv vo">'+avgOT+'%</div><div class="ks">4 carriers tracked</div></div>';
+  h+='<div class="kt"><div class="kl">Total Shipments</div><div class="kv">'+totVol.toLocaleString()+'</div><div class="ks">Last 30 days</div></div>';
+  h+='<div class="kt"><div class="kl">Claims YTD</div><div class="kv vc">'+fmt$(totClaims)+'</div><div class="ks">Across all carriers</div></div>';
+  h+='<div class="kt"><div class="kl">Cost/Unit Avg</div><div class="kv">$2.98</div><div class="ks">Weighted by volume</div></div>';
+  h+='</div>';
+  h+='<div class="cg">';
+  CA.forEach(function(c){
+    var rc=c.rating.startsWith('A')?'':'brch';
+    h+='<div class="cc '+rc+'"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">';
+    h+='<div><div style="font-size:13px;font-weight:700">'+c.n+'</div>';
+    h+='<div style="font-size:11px;color:var(--ts);margin-top:2px">'+c.lanes+' lanes &nbsp;&#183;&nbsp; '+c.vol.toLocaleString()+' shipments</div></div>';
+    h+='<div style="text-align:right"><div style="font-size:18px;font-weight:700;color:'+(c.ot>=92?'var(--ok)':c.ot>=88?'var(--wa)':'var(--cr)')+'">'+c.ot+'%</div>';
+    h+='<div style="font-size:9px;color:var(--tm)">On-Time</div></div></div>';
+    var rc2=c.rating.startsWith('A')?'bdg bo':c.rating==='B+'?'bdg bw':'bdg bc';
+    h+='<div class="ccm">';
+    [{v:'$'+c.cost,l:'$/unit'},{v:c.tdays+'d',l:'Transit'},{v:c.claims+'%',l:'Claims'},{v:c.rating,l:'Rating'}].forEach(function(m,i){
+      var mc=i===2&&c.claims>1.5?'var(--cr)':i===2&&c.claims>1?'var(--wa)':'inherit';
+      h+='<div class="ccmi"><div class="ccmv" style="color:'+mc+'">'+m.v+'</div><div class="ccml">'+m.l+'</div></div>';
+    });
+    h+='</div>';
+    h+='<div style="margin-top:9px"><div style="font-size:9px;color:var(--tm);margin-bottom:3px">30-day on-time trend</div>';
+    h+=ply(wkPts[CA.indexOf(c)],160,32,c.ot>=92?'#10b981':c.ot>=88?'#f59e0b':'#ef4444',null);
+    h+='</div></div>';
+  });
+  h+='</div>';
+  h+='<div class="tc">';
+  h+='<div>';
+  h+='<div class="card"><div class="ctitle">On-Time Trend — All Carriers</div>';
+  h+=afl(wkPts[0],wkPts[2],340,80,'#10b981','#f59e0b');
+  h+='<div style="display:flex;gap:16px;margin-top:7px;font-size:11px"><span style="color:#10b981">&#9644; FedEx</span><span style="color:#f59e0b">&#9644; UPS</span></div>';
+  h+='<div style="display:flex;gap:12px;margin-top:5px;font-size:11px"><span style="color:#ef4444">&#9644; XPO</span><span style="color:var(--teal)">&#9644; Estes</span></div>';
+  h+=afl(wkPts[1],wkPts[3],340,80,'#ef4444','var(--teal)');
+  h+='</div>';
+  h+='<div class="card"><div class="ctitle">SLA Compliance Heatmap</div>';
+  h+=hm(['FedEx','XPO','UPS','Estes'],['CHI','ATL','DAL','LAX','PHL','SEA'],
+    [[5,8,3,6,4,7],[12,15,18,10,14,9],[6,9,4,7,5,8],[18,22,15,12,19,25]],52,24);
+  h+='<div style="font-size:10px;color:var(--tm);margin-top:5px">SLA breach count per lane (30 days). Red = high breach rate.</div>';
+  h+='</div>';
+  h+='</div>';
+  h+='<div>';
+  h+='<div class="card"><div class="ctitle">Lane Performance — Top Lanes <span class="aib">30 DAYS</span></div>';
+  var lanes=[
+    {orig:'CHI',dest:'DAL',car:'FedEx',shp:284,ot:96,cpu:1.84,claims:0.4,cost:'$522.6K'},
+    {orig:'CHI',dest:'LAX',car:'FedEx',shp:198,ot:93,cpu:2.10,claims:0.6,cost:'$415.8K'},
+    {orig:'ATL',dest:'PHL',car:'XPO',shp:166,ot:81,cpu:3.20,claims:1.8,cost:'$531.2K'},
+    {orig:'PHL',dest:'SEA',car:'UPS',shp:142,ot:89,cpu:4.65,claims:0.9,cost:'$660.3K'},
+    {orig:'CHI',dest:'ATL',car:'Estes',shp:118,ot:84,cpu:2.75,claims:2.1,cost:'$324.5K'},
+    {orig:'LAX',dest:'SEA',car:'FedEx',shp:97,ot:94,cpu:1.95,claims:0.5,cost:'$189.2K'}];
+  h+='<table class="dt"><thead><tr><th>Lane</th><th>Carrier</th><th>Shipments</th><th>OT%</th><th>$/unit</th><th>Claims%</th><th>Cost</th></tr></thead><tbody>';
+  lanes.forEach(function(l){
+    var otc=l.ot>=92?'var(--ok)':l.ot>=85?'var(--wa)':'var(--cr)';
+    var cc=l.claims>1.5?'var(--cr)':l.claims>1.0?'var(--wa)':'var(--ok)';
+    h+='<tr><td style="font-weight:600">'+l.orig+' &#8594; '+l.dest+'</td><td style="font-size:11px">'+l.car+'</td><td>'+l.shp+'</td><td style="font-weight:600;color:'+otc+'">'+l.ot+'%</td><td>$'+l.cpu+'</td><td style="font-weight:600;color:'+cc+'">'+l.claims+'%</td><td style="font-size:11px">'+l.cost+'</td></tr>';
+  });
+  h+='</tbody></table></div>';
+  h+='<div class="card"><div class="ctitle">Damage & Claims Analysis</div>';
+  var claims=[
+    {car:'XPO Logistics',type:'Transit Damage',cnt:18,val:'$5,040',sev:'bc'},
+    {car:'Estes Express',type:'Transit Damage',cnt:12,val:'$3,360',sev:'bc'},
+    {car:'Estes Express',type:'Late Delivery',cnt:9,val:'$1,800',sev:'bw'},
+    {car:'XPO Logistics',type:'Late Delivery',cnt:7,val:'$1,400',sev:'bw'},
+    {car:'UPS Supply Chain',type:'Missing Item',cnt:4,val:'$1,120',sev:'bw'},
+    {car:'FedEx Freight',type:'Transit Damage',cnt:3,val:'$840',sev:'bo'}];
+  h+='<table class="dt"><thead><tr><th>Carrier</th><th>Claim Type</th><th>Count</th><th>Value</th><th>Severity</th></tr></thead><tbody>';
+  claims.forEach(function(c){
+    h+='<tr><td style="font-size:11px">'+c.car+'</td><td>'+c.type+'</td><td style="font-weight:600">'+c.cnt+'</td><td style="font-weight:600;color:var(--cr)">'+c.val+'</td><td><span class="bdg '+c.sev+'">'+(c.sev==='bc'?'High':c.sev==='bw'?'Med':'Low')+'</span></td></tr>';
+  });
+  h+='</tbody></table></div>';
+  h+='<div class="ai"><div class="ail">&#9679; AI Analysis — '+CFG.model+'</div>';
+  h+='FedEx Freight leads with 94% on-time across '+CA[0].lanes+' lanes and lowest damage rate (0.4%). XPO Logistics on ATL→PHL lane is underperforming at 81% OT — recommend SLA discussion or re-tender. Estes Express showing high damage claims (2.1% on CHI→ATL) — package handling audit recommended.';
+  h+=mBadge()+'</div>';
+  h+='</div></div>';
+  return h;
+}
+document.addEventListener('DOMContentLoaded',function(){
+  document.getElementById('cfgKey').value=CFG.key||'';
+  nav('home');
+  mBadges();
+});
+</script>
